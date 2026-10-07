@@ -1,0 +1,42 @@
+{
+  "name": "monsoon-route",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@strands-agents/sdk": "^1.19.0",
+    "@turf/along": "^7.4.0",
+    "@turf/boolean-intersects": "^7.4.0",
+    "@turf/helpers": "^7.4.0",
+    "@turf/line-intersect": "^7.4.0",
+    "@turf/line-segment": "^7.4.0",
+    "@turf/point-to-line-distance": "^7.4.0",
+    "@turf/point-to-polygon-distance": "^7.4.0",
+    "@vis.gl/react-google-maps": "^1.10.1",
+    "ai": "^7.0.128",
+    "ai-sdk-ollama": "^4.4.0",
+    "next": "16.3.8",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@vitest/coverage-v8": "^5.0.3",
+    "babel-plugin-react-compiler": "1.0.0",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.8",
+    "tailwindcss": "^4",
+    "typescript": "^5",
+    "vitest": "^5.0.3"
+  },
+  "packageManager": "pnpm@11.21.0"
+}
