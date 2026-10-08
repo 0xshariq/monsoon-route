@@ -1,6 +1,6 @@
 import { Agent } from "@strands-agents/sdk";
 import { VercelModel } from "@strands-agents/sdk/models/vercel";
-import { ollama } from "ai-sdk-ollama";
+import { createOllama } from "ai-sdk-ollama";
 import { z } from "zod";
 
 export type ExplanationInput = Record<string, unknown>;
@@ -9,10 +9,16 @@ const explanationOutputSchema = z.object({
   explanation: z.string().min(1).max(1200),
 });
 
-const systemPrompt =
-  "Explain the deterministic MonsoonRoute recommendation clearly and briefly. " +
-  "Use only the supplied context. Never change, recalculate, or question the recommendation. " +
-  "Return structured output with exactly one explanation string.";
+const systemPrompt = [
+  "You explain an already-computed MonsoonRoute recommendation.",
+  "Use only the supplied analysis context.",
+  "Do not recalculate route risk, choose another route, or modify scores.",
+  "Do not invent weather, hotspots, or evidence.",
+  "Do not claim a route is guaranteed safe.",
+  "Explain why the recommended route was selected, how it compares with the fastest route, rainfall conditions, waterlogging evidence, and the travel-time trade-off.",
+  "If the evidence is insufficient, say so.",
+  "Return structured output with exactly one explanation string.",
+].join(" ");
 
 export function createExplanationAgent(): Agent {
   return new Agent({
