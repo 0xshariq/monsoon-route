@@ -42,3 +42,10 @@ export type Recommendation = {
   status: RecommendationStatus;
   reason: RecommendationReason;
 };
+
+export type EvidenceType = "waterlogging" | "rain" | "travel-time";
+
+export type RecommendationEvidence = {
+  type: EvidenceType;
+  message: string;
+};
