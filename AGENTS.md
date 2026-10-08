@@ -296,7 +296,7 @@ AWS participation is through the already-approved **Strands open-source tool pat
 The approved visual reference image is part of the frozen UI specification:
 
 ```text
-docs/MonsoonRoute%20Dark%20UI%20Design%20System.png
+docs/MonsoonRoute Weather App UI Collage.png
 ```
 
 The coding agent must use this image together with `docs/design-system.md` when implementing the UI. The image is a visual reference, not permission to invent a different layout, color system, spacing system, or component style. If the image and written design-system rules appear to conflict, stop and report the exact conflict instead of deciding silently.
