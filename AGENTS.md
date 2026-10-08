@@ -1274,14 +1274,14 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 40
+CURRENT STAGE: 41
 CURRENT STATUS: IN PROGRESS
 CURRENT DAY: IMPLEMENTATION
 BLOCKER: None.
 
-Last completed: Stage 39 — /api/explain-route
-Validation: Added a node-runtime POST endpoint with strict Zod ExplanationContext validation, deterministic-boundary prompting, Strands/Ollama invocation, structured JSON success responses, and 400/502/503 failure responses.
-Next: Stage 40 — Strands TypeScript Integration
+Last completed: Stage 40 — Strands TypeScript Integration
+Validation: Updated the TypeScript integration to use the current `ollama` provider export with `Agent` and `VercelModel`; ESLint and diff checks passed.
+Next: Stage 41 — Ollama
 ```
 
 ### How to use this
@@ -1571,7 +1571,7 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 40 — Strands TypeScript Integration
 
-- [ ] Stage 40 — Strands TypeScript Integration
+- [x] Stage 40 — Strands TypeScript Integration
 
 ---
 

@@ -1,6 +1,6 @@
 import { Agent } from "@strands-agents/sdk";
 import { VercelModel } from "@strands-agents/sdk/models/vercel";
-import { createOllama } from "ai-sdk-ollama";
+import { ollama } from "ai-sdk-ollama";
 export type ExplanationInput = Record<string, unknown>;
 
 const systemPrompt =
@@ -10,9 +10,7 @@ const systemPrompt =
 export function createExplanationAgent(): Agent {
   return new Agent({
     model: new VercelModel({
-      provider: createOllama({
-        baseURL: process.env.OLLAMA_BASE_URL ?? "http://localhost:11434/api",
-      })("llama3.2") as never,
+      provider: ollama("llama3.2") as never,
     }),
     systemPrompt,
     printer: false,
