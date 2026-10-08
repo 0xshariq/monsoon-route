@@ -1275,13 +1275,13 @@ This is the most important section for continuing work across coding-agent sessi
 
 ```text
 CURRENT STAGE: 10
-  CURRENT STATUS: NOT STARTED
+CURRENT STATUS: COMPLETE
   CURRENT DAY: IMPLEMENTATION
   BLOCKER: None.
 
-  Last completed: Stage 9 — Google Routes API Provider
-  Validation: pnpm exec eslint src/lib/providers/google-routes.ts; git diff --check
-  Next: Stage 10 — Route Midpoint
+  Last completed: Stage 10 — Route Midpoint
+  Validation: pnpm exec eslint src/lib/geo/route-geometry.ts; git diff --check
+  Next: Stage 11 — Open-Meteo Provider
 ```
 
 ### How to use this
@@ -1345,7 +1345,7 @@ Do not invent a solution merely to keep progress green.
 
 - [X] Stage 2 — Design Tokens
   
-**Current cursor:** Stage 10
+**Current cursor:** Stage 11
 
 ---
 
@@ -1393,7 +1393,7 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 10 — Route Midpoint
 
-- [ ] Stage 10 — Route Midpoint
+  - [X] Stage 10 — Route Midpoint
 
 ---
 
