@@ -1,5 +1,98 @@
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import RouteForm from "@/components/route-form";
 import RouteMap from "@/components/route-map";
+import type { Recommendation, RouteAnalysis } from "@/types/route";
+
+type RecommendationSectionProps = {
+  recommendation: Recommendation;
+  routes: RouteAnalysis[];
+};
+
+function formatDuration(seconds: number): string {
+  return `${Math.max(1, Math.round(seconds / 60))} min`;
+}
+
+function RecommendationSection({
+  recommendation,
+  routes,
+}: RecommendationSectionProps) {
+  const recommendedRoute = routes.find(
+    ({ route }) => route.id === recommendation.recommendedRouteId,
+  );
+
+  if (!recommendedRoute) {
+    return null;
+  }
+
+  const fastestRoute = routes.reduce((fastest, current) =>
+    current.route.durationSeconds < fastest.route.durationSeconds
+      ? current
+      : fastest,
+  );
+  const timeDifferenceMinutes = Math.max(
+    0,
+    Math.round(
+      (recommendedRoute.route.durationSeconds -
+        fastestRoute.route.durationSeconds) /
+        60,
+    ),
+  );
+  const { avoidedHighRiskHotspots } = recommendation.reason;
+  const routeLabel =
+    recommendedRoute.route.label === "default" ? "Route A" : "Route B";
+
+  return (
+    <Card className="border-primary/50 bg-primary/[0.04] shadow-sm">
+      <CardHeader className="gap-3">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <CardDescription>Recommended route</CardDescription>
+            <CardTitle className="mt-1 text-2xl">{routeLabel}</CardTitle>
+          </div>
+          <Badge className="bg-success text-success-foreground">
+            Safer option
+          </Badge>
+        </div>
+        <p className="text-3xl font-semibold tracking-tight text-foreground">
+          {formatDuration(recommendedRoute.route.durationSeconds)}
+        </p>
+      </CardHeader>
+      <CardContent className="flex flex-col gap-4">
+        <div className="grid gap-3 sm:grid-cols-2">
+          <div className="rounded-lg border border-border bg-background/70 p-3">
+            <p className="text-sm text-muted-foreground">Travel-time trade-off</p>
+            <p className="mt-1 font-medium text-foreground">
+              {timeDifferenceMinutes > 0
+                ? `+${timeDifferenceMinutes} min vs fastest`
+                : "Fastest route"}
+            </p>
+          </div>
+          <div className="rounded-lg border border-border bg-background/70 p-3">
+            <p className="text-sm text-muted-foreground">Waterlogging evidence</p>
+            <p className="mt-1 font-medium text-foreground">
+              {avoidedHighRiskHotspots > 0
+                ? `${avoidedHighRiskHotspots} high-risk hotspot${
+                    avoidedHighRiskHotspots === 1 ? "" : "s"
+                  } avoided`
+                : "No high-risk hotspots avoided"}
+            </p>
+          </div>
+        </div>
+        <Button variant="outline" className="w-fit">
+          Explain this decision
+        </Button>
+      </CardContent>
+    </Card>
+  );
+}
 
 export default function MonsoonRouteHome() {
   return (
@@ -20,13 +113,22 @@ export default function MonsoonRouteHome() {
 
         <RouteForm />
 
-        <RouteMap origin={{
-          lat: 0,
-          lon: 0
-        }} destination={{
-          lat: 0,
-          lon: 0
-        }} routes={[]} recommendedRouteId={""} hotspots={[]} />
+        <RecommendationSection
+          recommendation={{
+            recommendedRouteId: "",
+            status: "lowest_risk_available",
+            reason: {
+              timeDifferenceMinutes: 0,
+              environmentalRiskDifference: 0,
+              waterloggingRiskDifference: 0,
+              avoidedHighRiskHotspots: 0,
+              decisionScoreDifference: 0,
+            },
+          }}
+          routes={[]}
+        />
+
+        <RouteMap origin={{ lat: 0, lon: 0 }} destination={{ lat: 0, lon: 0 }} routes={[]} recommendedRouteId="" hotspots={[]} />
       </div>
     </main>
   );

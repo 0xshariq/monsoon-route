@@ -1274,14 +1274,14 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 32
+CURRENT STAGE: 33
 CURRENT STATUS: IN PROGRESS
 CURRENT DAY: IMPLEMENTATION
 BLOCKER: None.
 
-Last completed: Stage 31 — Route Cards
-Validation: Implemented the route comparison cards using the existing shadcn Card and Badge components, displaying route duration, risk metrics, recommendation status, and travel-time trade-offs.
-Next: Stage 32 — Recommendation Section
+Last completed: Stage 32 — Recommendation Section
+Validation: Added a shadcn Card-based recommendation section that derives the recommended route, duration, fastest-route trade-off, avoided high-risk hotspots, and a restrained explanation action from deterministic route contracts.
+Next: Stage 33 — Route Analysis Component
 ```
 
 ### How to use this
@@ -1523,7 +1523,7 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 32 — Recommendation Section
 
-- [ ] Stage 32 — Recommendation Section
+- [x] Stage 32 — Recommendation Section
 
 ---
 
