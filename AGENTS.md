@@ -1274,14 +1274,14 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 17
+CURRENT STAGE: 18
   CURRENT STATUS: IN PROGRESS
   CURRENT DAY: IMPLEMENTATION
   BLOCKER: None.
 
-  Last completed: Stage 16 — One Hotspot, One Exposure
-  Validation: pnpm exec eslint src/lib/analysis/waterlogging-risk.ts; git diff --check; pnpm exec tsc --noEmit (blocked by pre-existing google namespace error in src/components/route-form.tsx)
-  Next: Stage 17 — Waterlogging Risk Formula
+  Last completed: Stage 17 — Waterlogging Risk Formula
+  Validation: pnpm exec eslint src/lib/analysis/waterlogging-risk.ts; git diff --check
+  Next: Stage 18 — Rain Analysis
 ```
 
 ### How to use this
@@ -1345,7 +1345,7 @@ Do not invent a solution merely to keep progress green.
 
 - [X] Stage 2 — Design Tokens
   
-**Current cursor:** Stage 17
+**Current cursor:** Stage 18
 
 ---
 
@@ -1435,7 +1435,7 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 17 — Waterlogging Risk Formula
 
-- [ ] Stage 17 — Waterlogging Risk Formula
+- [X] Stage 17 — Waterlogging Risk Formula
 
 ---
 
@@ -1975,7 +1975,7 @@ Explain this decision
 ExplanationContext
         ↓
 Strands
-        ↓
+        ��
 Ollama
         ↓
 Natural-language explanation
