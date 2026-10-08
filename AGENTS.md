@@ -1274,14 +1274,14 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 12
-CURRENT STATUS: COMPLETE
+CURRENT STAGE: 13
+CURRENT STATUS: IN PROGRESS
   CURRENT DAY: IMPLEMENTATION
   BLOCKER: None.
 
-  Last completed: Stage 11 — Open-Meteo Provider
-  Validation: pnpm exec eslint src/lib/providers/open-meteo.ts; git diff --check
-  Next: Stage 12 — Hotspot Dataset
+  Last completed: Stage 12 — Hotspot Dataset
+  Validation: node --check data/mumbai-region-waterlogging-hotspots.geojson; git diff --check
+  Next: Stage 13 — Spatial Candidate Filtering
 ```
 
 ### How to use this
@@ -1345,7 +1345,7 @@ Do not invent a solution merely to keep progress green.
 
 - [X] Stage 2 — Design Tokens
   
-**Current cursor:** Stage 11
+**Current cursor:** Stage 13
 
 ---
 
@@ -1399,13 +1399,13 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 11 — Open-Meteo Provider
 
-- [ ] Stage 11 — Open-Meteo Provider
+- [X] Stage 11 — Open-Meteo Provider
 
 ---
 
 ## Stage 12 — Hotspot Dataset
 
-- [ ] Stage 12 — Hotspot Dataset
+- [X] Stage 12 — Hotspot Dataset
 
 ---
 
@@ -1985,7 +1985,7 @@ And if Ollama fails:
 
 ```text
 everything above still works
-        ↓
+        ���
 deterministic explanation fallback
 ```
 
