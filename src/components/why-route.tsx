@@ -17,7 +17,7 @@ const stateCopy: Record<AiState, { title: string; description: string }> = {
     description: "Get a plain-language explanation after route analysis.",
   },
   loading: {
-    title: "Preparing explanation",
+    title: "Explaining this decision...",
     description: "We are generating context from the deterministic route results.",
   },
   success: {
@@ -49,6 +49,11 @@ export function WhyRoute({ state = "idle", explanation, onExplain }: WhyRoutePro
         {explanation ? (
           <p className="rounded-lg border border-border bg-muted/40 p-3 text-sm leading-relaxed text-foreground">
             {explanation}
+          </p>
+        ) : null}
+        {state === "fallback" ? (
+          <p className="text-sm text-muted-foreground">
+            AI explanation is currently unavailable.
           </p>
         ) : null}
         {state === "idle" || state === "error" ? (

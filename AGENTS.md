@@ -1274,14 +1274,14 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 43
+CURRENT STAGE: 46
 CURRENT STATUS: IN PROGRESS
 CURRENT DAY: IMPLEMENTATION
 BLOCKER: None.
 
-Last completed: Stage 42 — Strands Agent Configuration
-Validation: Configured one no-tools Strands agent with one VercelModel, one constrained system prompt, and Zod-validated structured output; ESLint, TypeScript, and diff checks passed.
-Next: Stage 43 — AI System Prompt
+Last completed: Stage 45 — AI UI
+Validation: Added the focused explanation UI with initial, loading, success, and deterministic-fallback states; fallback explicitly preserves the deterministic explanation and labels AI unavailability.
+Next: Stage 46 — AI Failure Test
 ```
 
 ### How to use this
@@ -1589,19 +1589,19 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 43 — AI System Prompt
 
-- [ ] Stage 43 — AI System Prompt
+- [x] Stage 43 — AI System Prompt
 
 ---
 
 ## Stage 44 — Structured AI Output
 
-- [ ] Stage 44 — Structured AI Output
+- [x] Stage 44 — Structured AI Output
 
 ---
 
 ## Stage 45 — AI UI
 
-- [ ] Stage 45 — AI UI
+- [x] Stage 45 — AI UI
 
 ---
 
