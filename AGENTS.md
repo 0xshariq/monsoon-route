@@ -1274,14 +1274,14 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 23
+CURRENT STAGE: 24
 CURRENT STATUS: IN PROGRESS
 CURRENT DAY: IMPLEMENTATION
 BLOCKER: None.
 
-Last completed: Stage 22 — Critical Risk Gate
-Validation: TypeScript check passed; Unit Test Group M cases M1/M2 verified; critical-risk-gate diff check clean.
-Next: Stage 23 — Route Ranking
+Last completed: Stage 23 — Route Ranking
+Validation: TypeScript check passed; Unit Test Group N cases N1/N2/N3/N4 verified; route-ranking diff check clean.
+Next: Stage 24 — Recommendation Contract
 ```
 
 ### How to use this
@@ -1471,7 +1471,7 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 23 — Route Ranking
 
-- [ ] Stage 23 — Route Ranking
+- [X] Stage 23 — Route Ranking
 
 ---
 
