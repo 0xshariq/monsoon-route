@@ -69,3 +69,12 @@ export function createDeterministicExplanation({
 }
 
 export const deterministicExplanation = createDeterministicExplanation;
+
+export function getExplanationAfterAiFailure(
+  input: DeterministicExplanationInput,
+): { state: "fallback"; explanation: string } {
+  return {
+    state: "fallback",
+    explanation: createDeterministicExplanation(input),
+  };
+}
