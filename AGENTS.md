@@ -1274,10 +1274,10 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 4
-  CURRENT STATUS: IN PROGRESS
+CURRENT STAGE: 5
+  CURRENT STATUS: NOT STARTED
   CURRENT DAY: IMPLEMENTATION
-  BLOCKER: None. Stage 3 implementation is complete; live map acceptance was previously blocked only by the local API key.
+  BLOCKER: None.
 ```
 
 ### How to use this
@@ -1347,7 +1347,7 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 3 — Google Maps JavaScript Integration
 
-- [ ] Stage 3 — Google Maps JavaScript Integration
+- [X] Stage 3 — Google Maps JavaScript Integration
 
 ---
 
