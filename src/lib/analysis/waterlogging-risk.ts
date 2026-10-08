@@ -1,35 +1,48 @@
-import { getHotspotDistance } from "@/lib/geo/hotspot-distance";
-import type { WaterloggingHotspot } from "@/types/hotspot";
-import type { Route } from "@/types/route";
+import type { HotspotSeverity } from "@/types/hotspot";
 
-export type HotspotExposure = {
-  hotspot: WaterloggingHotspot;
+export type WaterloggingRiskExposure = {
   distanceMeters: number;
+  severity: HotspotSeverity;
+  documentedEventCount: number;
 };
 
-/**
- * Returns one exposure for each hotspot, even when a route passes a hotspot
- * multiple times or the candidate list contains duplicate records.
- */
-export function getHotspotExposures(
-  route: Pick<Route, "geometry">,
-  hotspots: WaterloggingHotspot[],
-): HotspotExposure[] {
-  const exposures = new Map<string, HotspotExposure>();
+const HOTSPOT_CORRIDOR_METERS = 75;
+const RECURRENCE_REFERENCE_EVENTS = 4;
 
-  for (const hotspot of hotspots) {
-    const distanceMeters = getHotspotDistance(hotspot, route);
-    const existingExposure = exposures.get(hotspot.id);
+const SEVERITY_WEIGHT: Record<HotspotSeverity, number> = {
+  medium: 0.7,
+  high: 1.0,
+};
 
-    if (
-      existingExposure === undefined ||
-      distanceMeters < existingExposure.distanceMeters
-    ) {
-      exposures.set(hotspot.id, { hotspot, distanceMeters });
-    }
-  }
-
-  return [...exposures.values()];
+function getProximityFactor(distanceMeters: number): number {
+  return Math.max(0, 1 - distanceMeters / HOTSPOT_CORRIDOR_METERS);
 }
 
-export const collectHotspotExposures = getHotspotExposures;
+function getRecurrenceFactor(documentedEventCount: number): number {
+  const eventCount = Math.max(0, documentedEventCount);
+
+  return Math.min(
+    1,
+    Math.log1p(eventCount) / Math.log1p(RECURRENCE_REFERENCE_EVENTS),
+  );
+}
+
+export function calculateWaterloggingRisk(
+  exposures: WaterloggingRiskExposure[],
+): number {
+  const totalContribution = exposures.reduce((sum, exposure) => {
+    const proximityFactor = getProximityFactor(exposure.distanceMeters);
+    const recurrenceFactor = getRecurrenceFactor(
+      exposure.documentedEventCount,
+    );
+    const severityWeight = SEVERITY_WEIGHT[exposure.severity];
+
+    return sum + severityWeight * recurrenceFactor * proximityFactor;
+  }, 0);
+
+  return 100 * (1 - Math.exp(-totalContribution));
+}
+
+export const getWaterloggingRisk = calculateWaterloggingRisk;
+
+export { HOTSPOT_CORRIDOR_METERS, RECURRENCE_REFERENCE_EVENTS, SEVERITY_WEIGHT };
