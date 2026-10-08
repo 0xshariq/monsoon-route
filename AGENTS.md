@@ -1274,14 +1274,14 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 20
+CURRENT STAGE: 21
   CURRENT STATUS: IN PROGRESS
   CURRENT DAY: IMPLEMENTATION
   BLOCKER: None.
 
-  Last completed: Stage 19 — Environmental Risk
-  Validation: pnpm exec eslint src/lib/analysis/environmental-risk.ts; git diff --check; canonical formula check passed
-  Next: Stage 20 — Time Penalty
+  Last completed: Stage 20 — Time Penalty
+  Validation: TypeScript check passed; Unit Test Group K cases K1/K2/K3 verified; time-penalty diff check clean.
+  Next: Stage 21 — Decision Score
 ```
 
 ### How to use this
@@ -1453,7 +1453,7 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 20 — Time Penalty
 
-- [ ] Stage 20 — Time Penalty
+- [X] Stage 20 — Time Penalty
 
 ---
 
