@@ -1274,14 +1274,14 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 36
+CURRENT STAGE: 37
 CURRENT STATUS: IN PROGRESS
 CURRENT DAY: IMPLEMENTATION
 BLOCKER: None.
 
-Last completed: Stage 35 — UI States
-Validation: Added explicit idle, loading, success, request-error, AI loading, AI fallback, and AI error UI states with accessible live regions and clear empty-state copy.
-Next: Stage 36 — Deterministic Explanation
+Last completed: Stage 36 — Deterministic Explanation
+Validation: Added deterministic explanation generation from recommendation, duration, waterlogging, rain, and environmental-risk results; ESLint and git diff checks passed.
+Next: Stage 37 — AI Boundary
 ```
 
 ### How to use this
@@ -1547,7 +1547,7 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 36 — Deterministic Explanation
 
-- [ ] Stage 36 — Deterministic Explanation
+- [x] Stage 36 — Deterministic Explanation
 
 ---
 
