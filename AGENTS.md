@@ -1274,7 +1274,7 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 6
+CURRENT STAGE: 7
   CURRENT STATUS: NOT STARTED
   CURRENT DAY: IMPLEMENTATION
   BLOCKER: None.
@@ -1365,7 +1365,7 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 6 — Shared Type Contracts
 
-- [ ] Stage 6 — Shared Type Contracts
+- [X] Stage 6 — Shared Type Contracts
 
 ---
 
@@ -2009,7 +2009,7 @@ READ THE PLAN
 FIND CURRENT STAGE
     ↓
 IMPLEMENT IT
-    ↓
+    ���
 TEST IT
     ↓
 MARK IT COMPLETE
