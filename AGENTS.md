@@ -1274,14 +1274,14 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 10
+CURRENT STAGE: 12
 CURRENT STATUS: COMPLETE
   CURRENT DAY: IMPLEMENTATION
   BLOCKER: None.
 
-  Last completed: Stage 10 — Route Midpoint
-  Validation: pnpm exec eslint src/lib/geo/route-geometry.ts; git diff --check
-  Next: Stage 11 — Open-Meteo Provider
+  Last completed: Stage 11 — Open-Meteo Provider
+  Validation: pnpm exec eslint src/lib/providers/open-meteo.ts; git diff --check
+  Next: Stage 12 — Hotspot Dataset
 ```
 
 ### How to use this
