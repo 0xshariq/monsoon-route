@@ -1274,14 +1274,14 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 33
+CURRENT STAGE: 35
 CURRENT STATUS: IN PROGRESS
 CURRENT DAY: IMPLEMENTATION
 BLOCKER: None.
 
-Last completed: Stage 32 — Recommendation Section
-Validation: Added a shadcn Card-based recommendation section that derives the recommended route, duration, fastest-route trade-off, avoided high-risk hotspots, and a restrained explanation action from deterministic route contracts.
-Next: Stage 33 — Route Analysis Component
+Last completed: Stage 34 — Risk Breakdown
+Validation: Added a reusable RouteAnalysis card with numeric, accessible progress indicators for environmental, waterlogging, rain, and time penalty scores plus evidence.
+Next: Stage 35 — UI States
 ```
 
 ### How to use this
@@ -1529,13 +1529,13 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 33 — Route Analysis Component
 
-- [ ] Stage 33 — Route Analysis Component
+- [x] Stage 33 — Route Analysis Component
 
 ---
 
 ## Stage 34 — Risk Breakdown
 
-- [ ] Stage 34 — Risk Breakdown
+- [x] Stage 34 — Risk Breakdown
 
 ---
 
