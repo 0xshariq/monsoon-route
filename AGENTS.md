@@ -1274,14 +1274,14 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 9
+CURRENT STAGE: 10
   CURRENT STATUS: NOT STARTED
   CURRENT DAY: IMPLEMENTATION
   BLOCKER: None.
 
-  Last completed: Stage 8 — Zod Request Validation
-  Validation: pnpm exec eslint src/lib/validation.ts; git diff --check
-  Next: Stage 9 — Google Routes API Provider
+  Last completed: Stage 9 — Google Routes API Provider
+  Validation: pnpm exec eslint src/lib/providers/google-routes.ts; git diff --check
+  Next: Stage 10 — Route Midpoint
 ```
 
 ### How to use this
@@ -1345,7 +1345,7 @@ Do not invent a solution merely to keep progress green.
 
 - [X] Stage 2 — Design Tokens
   
-**Current cursor:** Stage 9
+**Current cursor:** Stage 10
 
 ---
 
@@ -1387,7 +1387,7 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 9 — Google Routes API Provider
 
-- [ ] Stage 9 — Google Routes API Provider
+- [X] Stage 9 — Google Routes API Provider
 
 ---
 
@@ -1725,8 +1725,8 @@ Next Stage:
   ```text
   MonsoonRoute Progress
 
-Current Stage: 9
-Completed: Stage 8 — Zod Request Validation
+Current Stage: 10
+  Completed: Stage 9 — Google Routes API Provider
 Files changed:
   src/lib/validation/route-request.ts
 Checks run:
