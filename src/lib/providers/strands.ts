@@ -1,11 +1,18 @@
 import { Agent } from "@strands-agents/sdk";
 import { VercelModel } from "@strands-agents/sdk/models/vercel";
 import { ollama } from "ai-sdk-ollama";
+import { z } from "zod";
+
 export type ExplanationInput = Record<string, unknown>;
+
+const explanationOutputSchema = z.object({
+  explanation: z.string().min(1).max(1200),
+});
 
 const systemPrompt =
   "Explain the deterministic MonsoonRoute recommendation clearly and briefly. " +
-  "Never change, recalculate, or question the recommendation. Return only a concise plain-text explanation.";
+  "Use only the supplied context. Never change, recalculate, or question the recommendation. " +
+  "Return structured output with exactly one explanation string.";
 
 export function createExplanationAgent(): Agent {
   return new Agent({
@@ -15,6 +22,7 @@ export function createExplanationAgent(): Agent {
       })(process.env.OLLAMA_MODEL ?? "llama3.2") as never,
     }),
     systemPrompt,
+    structuredOutputSchema: explanationOutputSchema,
     printer: false,
   });
 }
