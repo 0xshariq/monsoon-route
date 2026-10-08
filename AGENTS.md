@@ -1274,7 +1274,7 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 5
+CURRENT STAGE: 6
   CURRENT STATUS: NOT STARTED
   CURRENT DAY: IMPLEMENTATION
   BLOCKER: None.
@@ -1359,7 +1359,7 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 5 — Browser Geolocation
 
-- [ ] Stage 5 — Browser Geolocation
+- [x] Stage 5 — Browser Geolocation
 
 ---
 
