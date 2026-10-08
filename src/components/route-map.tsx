@@ -193,7 +193,7 @@ export function RouteMap({
         </p>
       </div>
 
-      <div className="relative min-h-90 overflow-hidden rounded-xl border border-border bg-card shadow-sm">
+      <div className="relative min-h-72 overflow-hidden rounded-xl border border-border bg-card shadow-sm sm:min-h-90">
         <APIProvider apiKey={apiKey}>
           <Map
             defaultCenter={MUMBAI_CENTER}
@@ -252,7 +252,7 @@ export function RouteMap({
 
         <div
           aria-label="Map legend"
-          className="absolute bottom-3 left-3 rounded-lg border border-border bg-card/95 p-3 text-xs shadow-md backdrop-blur"
+          className="absolute bottom-2 left-2 max-w-[calc(100%-1rem)] rounded-lg border border-border bg-card/95 p-2 text-xs shadow-md backdrop-blur sm:bottom-3 sm:left-3 sm:p-3"
         >
           <p className="mb-2 font-semibold text-foreground">Map legend</p>
 
