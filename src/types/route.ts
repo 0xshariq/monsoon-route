@@ -49,3 +49,30 @@ export type RecommendationEvidence = {
   type: EvidenceType;
   message: string;
 };
+
+export type WaterloggingAnalysis = {
+  riskScore: number;
+  exposedHotspots: number;
+  highRiskHotspotCount: number;
+};
+
+export type RainAnalysis = {
+  totalPrecipitationMm: number;
+  peakHourlyPrecipitationMm: number;
+  averagePrecipitationProbability: number;
+  peakPrecipitationProbability: number;
+  rainRisk: number;
+  intervalsUsed: number;
+};
+
+export type AnalysisEvidence = RecommendationEvidence;
+
+export type RouteAnalysis = {
+  route: Route;
+  waterlogging: WaterloggingAnalysis;
+  rain: RainAnalysis;
+  environmentalRiskScore: number;
+  timePenalty: number;
+  decisionScore: number;
+  evidence: AnalysisEvidence[];
+};

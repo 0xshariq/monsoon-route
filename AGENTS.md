@@ -1274,14 +1274,14 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 26
+CURRENT STAGE: 27
 CURRENT STATUS: IN PROGRESS
 CURRENT DAY: IMPLEMENTATION
 BLOCKER: None.
 
-Last completed: Stage 25 — Evidence Generation
-Validation: Evidence types and deterministic waterlogging, rain, and travel-time evidence generation verified; no absolute-safety claims; recommendation evidence diff check clean.
-Next: Stage 26 — Final Internal RouteAnalysis
+Last completed: Stage 26 — Final Internal RouteAnalysis
+Validation: Added the normalized RouteAnalysis contract with typed waterlogging, rain, environmental, time-penalty, decision-score, and deterministic evidence fields; raw provider structures are excluded from the contract.
+Next: Stage 27 — /api/analyze-route
 ```
 
 ### How to use this
@@ -1345,7 +1345,7 @@ Do not invent a solution merely to keep progress green.
 
 - [X] Stage 2 — Design Tokens
   
-**Current cursor:** Stage 20
+**Current cursor:** Stage 27
 
 ---
 
@@ -1489,7 +1489,7 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 26 — Final Internal RouteAnalysis
 
-- [ ] Stage 26 — Final Internal RouteAnalysis
+- [X] Stage 26 — Final Internal RouteAnalysis
 
 ---
 
