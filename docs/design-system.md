@@ -47,6 +47,16 @@ more sophisticated.
 
 ------------------------------------------------------------------------
 
+## Approved UI Design Reference
+
+The approved visual reference for this design system is:
+
+![MonsoonRoute Dark UI Design System](./MonsoonRoute%20Dark%20UI%20Design%20System.png)
+
+**Repository path:** `docs/MonsoonRoute%20Dark%20UI%20Design%20System.png`
+
+This image is an implementation reference and must be considered together with the written rules in this document. The written design-system rules remain the explicit contract for colors, typography, spacing, component behavior, accessibility, and responsive behavior. Do not invent a separate visual direction during implementation.
+
 # 2. Design Personality
 
 MonsoonRoute should feel:

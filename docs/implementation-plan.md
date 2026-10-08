@@ -614,7 +614,7 @@ src/
 │   └── hotspot.ts
 │
 └── data/
-    └── mumbai-waterlogging-hotspots.geojson
+    └── mumbai-region-waterlogging-hotspots.geojson
 ```
 
 If the exact Next.js project uses a slightly different `src` convention,
@@ -626,6 +626,25 @@ compilation.
 ------------------------------------------------------------------------
 
 # 11. Stage 1 --- Next.js Foundation
+
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+package.json
+pnpm-lock.yaml
+tsconfig.json
+next.config.ts
+postcss.config.mjs
+eslint.config.mjs
+src/app/layout.tsx
+src/app/page.tsx
+src/app/globals.css
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
 
 ## Goal
 
@@ -671,6 +690,18 @@ Create only enough structure for the remaining stages.
 ------------------------------------------------------------------------
 
 # 12. Stage 2 --- Design Tokens
+
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/app/globals.css
+src/app/layout.tsx
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
 
 Implement the values from `design-system.md`.
 
@@ -731,6 +762,18 @@ Do not invent another color palette.
 ------------------------------------------------------------------------
 
 # 13. Stage 3 --- Google Maps JavaScript Integration
+
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/components/route-map.tsx
+src/app/page.tsx
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
 
 ## Goal
 
@@ -841,6 +884,17 @@ Do not display fake hotspots.
 
 # 14. Stage 4 --- Google Place Autocomplete
 
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/components/route-form.tsx
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
+
 The user should not manually type latitude/longitude.
 
 The UI collects:
@@ -928,6 +982,17 @@ Find safer route
 
 # 15. Stage 5 --- Browser Geolocation
 
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/components/route-form.tsx
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
+
 The:
 
 ``` text
@@ -958,6 +1023,19 @@ They must not be stored in a database.
 ------------------------------------------------------------------------
 
 # 16. Stage 6 --- Shared Type Contracts
+
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/types/route.ts
+src/types/weather.ts
+src/types/hotspot.ts
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
 
 Create shared internal types before implementing providers.
 
@@ -1013,6 +1091,17 @@ This distinction must be preserved everywhere.
 
 # 17. Stage 7 --- Route Contracts
 
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/types/route.ts
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
+
 Implement:
 
 ``` ts
@@ -1047,6 +1136,17 @@ Do not expose Google's raw route object to the frontend.
 ------------------------------------------------------------------------
 
 # 18. Stage 8 --- Zod Request Validation
+
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/lib/validation.ts
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
 
 Create Zod schemas before writing the route handler.
 
@@ -1102,6 +1202,17 @@ Never trust browser validation.
 ------------------------------------------------------------------------
 
 # 19. Stage 9 --- Google Routes API Provider
+
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/lib/providers/google-routes.ts
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
 
 Create:
 
@@ -1273,6 +1384,17 @@ Do not use Google's route label string as the sole application ID.
 
 # 24. Stage 10 --- Route Midpoint
 
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/lib/geo/route-geometry.ts
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
+
 Each normalized route needs one representative weather coordinate.
 
 Use the geometric midpoint of the route:
@@ -1311,6 +1433,17 @@ https://turfjs.org/docs/api/along
 ------------------------------------------------------------------------
 
 # 25. Stage 11 --- Open-Meteo Provider
+
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/lib/providers/open-meteo.ts
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
 
 Create:
 
@@ -1550,10 +1683,21 @@ Return an honest error response.
 
 # 32. Stage 12 --- Hotspot Dataset
 
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/data/mumbai-region-waterlogging-hotspots.geojson
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
+
 Create:
 
 ``` text
-src/data/mumbai-waterlogging-hotspots.geojson
+src/data/mumbai-region-waterlogging-hotspots.geojson
 ```
 
 The dataset must be source-backed.
@@ -1736,6 +1880,17 @@ severity levels unless the architecture is intentionally changed later.
 
 # 38. Stage 13 --- Spatial Candidate Filtering
 
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/lib/geo/spatial-filter.ts
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
+
 Do not compare every complex geometry blindly if a spatial prefilter can
 reduce the work.
 
@@ -1817,6 +1972,17 @@ that is not among the user's nearest locations.
 
 # 40. Stage 14 --- Point Hotspot Distance
 
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/lib/geo/hotspot-distance.ts
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
+
 For point hotspots:
 
 ``` text
@@ -1851,6 +2017,17 @@ https://turfjs.org/docs/api/pointToLineDistance
 ------------------------------------------------------------------------
 
 # 41. Stage 15 --- Polygon Hotspot Handling
+
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/lib/geo/hotspot-distance.ts
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
 
 For polygons:
 
@@ -1912,6 +2089,17 @@ and test it separately.
 
 # 42. Stage 16 --- One Hotspot, One Exposure
 
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/lib/analysis/waterlogging-risk.ts
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
+
 A route can pass the same hotspot several times or contain several route
 segments close to it.
 
@@ -1942,6 +2130,17 @@ for the same hotspot.
 ------------------------------------------------------------------------
 
 # 43. Stage 17 --- Waterlogging Risk Formula
+
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/lib/analysis/waterlogging-risk.ts
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
 
 Constants:
 
@@ -2035,6 +2234,17 @@ Never say:
 
 # 45. Stage 18 --- Rain Analysis
 
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/lib/analysis/rain-risk.ts
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
+
 For every candidate route:
 
 ``` text
@@ -2114,6 +2324,17 @@ It is **not**:
 
 # 47. Stage 19 --- Environmental Risk
 
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/lib/analysis/environmental-risk.ts
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
+
 Frozen formula:
 
 ``` text
@@ -2138,6 +2359,17 @@ Rain is an environmental input shared by the broader area.
 ------------------------------------------------------------------------
 
 # 48. Stage 20 --- Time Penalty
+
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/lib/analysis/time-penalty.ts
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
 
 Find:
 
@@ -2172,6 +2404,17 @@ Do not create a nonlinear travel-time model.
 
 # 49. Stage 21 --- Decision Score
 
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/lib/analysis/decision-score.ts
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
+
 Frozen formula:
 
 ``` text
@@ -2193,6 +2436,17 @@ Do not maximize it.
 ------------------------------------------------------------------------
 
 # 50. Stage 22 --- Critical Risk Gate
+
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/lib/analysis/recommendation.ts
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
 
 Constant:
 
@@ -2244,6 +2498,17 @@ instead.
 
 # 51. Stage 23 --- Route Ranking
 
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/lib/analysis/recommendation.ts
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
+
 Normal ranking:
 
 ``` text
@@ -2269,6 +2534,18 @@ No additional optimizer.
 ------------------------------------------------------------------------
 
 # 52. Stage 24 --- Recommendation Contract
+
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/types/route.ts
+src/lib/analysis/recommendation.ts
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
 
 Use:
 
@@ -2304,6 +2581,18 @@ type RecommendationReason = {
 
 # 53. Stage 25 --- Evidence Generation
 
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/types/route.ts
+src/lib/analysis/recommendation.ts
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
+
 Evidence must be generated by the deterministic engine.
 
 Example:
@@ -2334,6 +2623,17 @@ disabled.
 
 # 54. Stage 26 --- Final Internal RouteAnalysis
 
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/types/route.ts
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
+
 The main internal object is:
 
 ``` ts
@@ -2355,6 +2655,17 @@ It must never receive raw Google/Open-Meteo structures.
 ------------------------------------------------------------------------
 
 # 55. Stage 27 --- `/api/analyze-route`
+
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/app/api/analyze-route/route.ts
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
 
 Create:
 
@@ -2476,10 +2787,22 @@ Do not calculate risk without an actual candidate route.
 
 # 59. Stage 28 --- Frontend Route Form
 
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/components/route-form.tsx
+src/app/page.tsx
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
+
 Create:
 
 ``` text
-components/route-form.tsx
+src/components/route-form.tsx
 ```
 
 Responsibilities:
@@ -2550,10 +2873,21 @@ Those are implementation details.
 
 # 61. Stage 29 --- Route Map
 
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/components/route-map.tsx
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
+
 Create:
 
 ``` text
-components/route-map.tsx
+src/components/route-map.tsx
 ```
 
 Props are derived from already-computed data.
@@ -2670,6 +3004,17 @@ Evidence belongs in the analysis panel.
 
 # 65. Stage 30 --- Map Camera
 
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/components/route-map.tsx
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
+
 After analysis:
 
 ``` text
@@ -2690,10 +3035,21 @@ Do not zoom to the nearest hotspot instead of the route.
 
 # 66. Stage 31 --- Route Cards
 
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/components/route-card.tsx
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
+
 Create:
 
 ``` text
-components/route-card.tsx
+src/components/route-card.tsx
 ```
 
 Each candidate gets one compact card.
@@ -2735,6 +3091,17 @@ RECOMMENDED
 
 # 67. Stage 32 --- Recommendation Section
 
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/app/page.tsx
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
+
 The recommended route receives a larger visual section.
 
 Show:
@@ -2766,10 +3133,21 @@ Find safer route
 
 # 68. Stage 33 --- Route Analysis Component
 
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/components/route-analysis.tsx
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
+
 Create:
 
 ``` text
-components/route-analysis.tsx
+src/components/route-analysis.tsx
 ```
 
 It renders deterministic information:
@@ -2787,6 +3165,17 @@ It does not recalculate the numbers.
 ------------------------------------------------------------------------
 
 # 69. Stage 34 --- Risk Breakdown
+
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/components/route-analysis.tsx
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
 
 Use simple progress indicators.
 
@@ -2813,6 +3202,22 @@ Never communicate risk using color alone.
 ------------------------------------------------------------------------
 
 # 70. Stage 35 --- UI States
+
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/app/page.tsx
+src/components/route-form.tsx
+src/components/route-map.tsx
+src/components/route-card.tsx
+src/components/route-analysis.tsx
+src/components/why-route.tsx
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
 
 Implement all required states:
 
@@ -2843,6 +3248,17 @@ The application must never remain visually ambiguous.
 
 # 71. Stage 36 --- Deterministic Explanation
 
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/lib/explanation/deterministic-explanation.ts
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
+
 Create:
 
 ``` text
@@ -2864,6 +3280,18 @@ It is the guaranteed fallback.
 ------------------------------------------------------------------------
 
 # 72. Stage 37 --- AI Boundary
+
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/app/api/explain-route/route.ts
+src/lib/providers/strands.ts
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
 
 Only after the complete deterministic system works should AI be
 implemented.
@@ -2894,6 +3322,17 @@ recommendation
 ------------------------------------------------------------------------
 
 # 73. Stage 38 --- ExplanationContext
+
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/types/route.ts
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
 
 Do not send the entire analysis.
 
@@ -2941,6 +3380,17 @@ type ExplanationContext = {
 
 # 74. Stage 39 --- `/api/explain-route`
 
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/app/api/explain-route/route.ts
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
+
 Create:
 
 ``` text
@@ -2986,6 +3436,17 @@ decision engine
 
 # 75. Stage 40 --- Strands TypeScript Integration
 
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/lib/providers/strands.ts
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
+
 Use the current TypeScript integration:
 
 ``` ts
@@ -3018,6 +3479,18 @@ https://strandsagents.com/docs/user-guide/sdk/model-providers/vercel/
 ------------------------------------------------------------------------
 
 # 76. Stage 41 --- Ollama
+
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/lib/providers/strands.ts
+.env.local
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
 
 Ollama must be running locally for the full AI path.
 
@@ -3054,6 +3527,17 @@ This is intentionally a local demonstration path.
 
 # 77. Stage 42 --- Strands Agent Configuration
 
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/lib/providers/strands.ts
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
+
 Use:
 
 ``` text
@@ -3080,6 +3564,17 @@ It receives only the explanation context.
 ------------------------------------------------------------------------
 
 # 78. Stage 43 --- AI System Prompt
+
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/lib/providers/strands.ts
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
 
 The system prompt must enforce:
 
@@ -3118,6 +3613,18 @@ The prompt is a safety boundary, not a route-planning prompt.
 
 # 79. Stage 44 --- Structured AI Output
 
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/lib/providers/strands.ts
+src/types/route.ts
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
+
 The AI output must be:
 
 ``` ts
@@ -3151,10 +3658,21 @@ The AI output is explanation text only.
 
 # 80. Stage 45 --- AI UI
 
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/components/why-route.tsx
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
+
 Create:
 
 ``` text
-components/why-route.tsx
+src/components/why-route.tsx
 ```
 
 Initial state:
@@ -3202,6 +3720,18 @@ multi-agent UI
 
 # 81. Stage 46 --- AI Failure Test
 
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/components/why-route.tsx
+src/lib/explanation/deterministic-explanation.ts
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
+
 Intentionally stop Ollama.
 
 Then:
@@ -3227,6 +3757,22 @@ This is a mandatory acceptance test.
 ------------------------------------------------------------------------
 
 # 82. Stage 47 --- Final Frontend Composition
+
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/app/page.tsx
+src/components/route-form.tsx
+src/components/route-map.tsx
+src/components/route-card.tsx
+src/components/route-analysis.tsx
+src/components/why-route.tsx
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
 
 The page must remain one focused experience.
 
@@ -3266,6 +3812,24 @@ for the MVP.
 
 # 83. Stage 48 --- Responsive Behavior
 
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/app/globals.css
+src/app/layout.tsx
+src/app/page.tsx
+src/components/route-form.tsx
+src/components/route-map.tsx
+src/components/route-card.tsx
+src/components/route-analysis.tsx
+src/components/why-route.tsx
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
+
 Desktop:
 
 ``` text
@@ -3297,6 +3861,39 @@ Follow `design-system.md`.
 ------------------------------------------------------------------------
 
 # 84. Stage 49 --- Complete Analyze Integration
+
+
+## Implementation file(s)
+
+The coding agent must create or modify **only these paths for this stage**:
+
+```text
+src/app/page.tsx
+src/app/api/analyze-route/route.ts
+src/components/route-form.tsx
+src/components/route-map.tsx
+src/components/route-card.tsx
+src/components/route-analysis.tsx
+src/components/why-route.tsx
+src/lib/providers/google-routes.ts
+src/lib/providers/open-meteo.ts
+src/lib/geo/route-geometry.ts
+src/lib/geo/hotspot-distance.ts
+src/lib/geo/spatial-filter.ts
+src/lib/analysis/rain-risk.ts
+src/lib/analysis/waterlogging-risk.ts
+src/lib/analysis/environmental-risk.ts
+src/lib/analysis/time-penalty.ts
+src/lib/analysis/decision-score.ts
+src/lib/analysis/recommendation.ts
+src/lib/explanation/deterministic-explanation.ts
+src/types/route.ts
+src/types/weather.ts
+src/types/hotspot.ts
+src/data/mumbai-region-waterlogging-hotspots.geojson
+```
+
+If a listed file does not yet exist, create it at exactly this path. If a listed file already exists, modify that file rather than creating an alternative filename. Do not invent or rename implementation files during this stage.
 
 At this point the application should support:
 
@@ -4255,7 +4852,7 @@ Source preparation happens offline.
 Runtime uses:
 
 ``` text
-mumbai-waterlogging-hotspots.geojson
+mumbai-region-waterlogging-hotspots.geojson
 ```
 
 ------------------------------------------------------------------------
