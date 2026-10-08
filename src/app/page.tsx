@@ -153,32 +153,40 @@ export default function MonsoonRouteHome() {
         <RouteForm onSubmit={analyzeRoute} />
         <RequestStateMessage state={requestState} />
 
-        <RecommendationSection
-          recommendation={{
-            recommendedRouteId: "",
-            status: "lowest_risk_available",
-            reason: {
-              timeDifferenceMinutes: 0,
-              environmentalRiskDifference: 0,
-              waterloggingRiskDifference: 0,
-              avoidedHighRiskHotspots: 0,
-              decisionScoreDifference: 0,
-            },
-          }}
-          routes={[]}
-        />
+        <section aria-label="Route results" className="flex flex-col gap-6">
+          <RouteMap
+            origin={{ lat: 0, lon: 0 }}
+            destination={{ lat: 0, lon: 0 }}
+            routes={[]}
+            recommendedRouteId=""
+            hotspots={[]}
+          />
 
-        <WhyRoute
-          state={aiState}
-          explanation={
-            aiState === "fallback"
-              ? "The deterministic route decision remains available while an AI explanation is unavailable."
-              : undefined
-          }
-          onExplain={explainRoute}
-        />
+          <RecommendationSection
+            recommendation={{
+              recommendedRouteId: "",
+              status: "lowest_risk_available",
+              reason: {
+                timeDifferenceMinutes: 0,
+                environmentalRiskDifference: 0,
+                waterloggingRiskDifference: 0,
+                avoidedHighRiskHotspots: 0,
+                decisionScoreDifference: 0,
+              },
+            }}
+            routes={[]}
+          />
 
-        <RouteMap origin={{ lat: 0, lon: 0 }} destination={{ lat: 0, lon: 0 }} routes={[]} recommendedRouteId="" hotspots={[]} />
+          <WhyRoute
+            state={aiState}
+            explanation={
+              aiState === "fallback"
+                ? "The deterministic route decision remains available while an AI explanation is unavailable."
+                : undefined
+            }
+            onExplain={explainRoute}
+          />
+        </section>
       </div>
     </main>
   );

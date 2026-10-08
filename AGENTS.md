@@ -1607,13 +1607,13 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 46 — AI Failure Test
 
-- [ ] Stage 46 — AI Failure Test
+- [x] Stage 46 — AI Failure Test
 
 ---
 
 ## Stage 47 — Final Frontend Composition
 
-- [ ] Stage 47 — Final Frontend Composition
+- [x] Stage 47 — Final Frontend Composition
 
 ---
 
