@@ -1274,14 +1274,14 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 24
+CURRENT STAGE: 25
 CURRENT STATUS: IN PROGRESS
 CURRENT DAY: IMPLEMENTATION
 BLOCKER: None.
 
-Last completed: Stage 23 — Route Ranking
-Validation: TypeScript check passed; Unit Test Group N cases N1/N2/N3/N4 verified; route-ranking diff check clean.
-Next: Stage 24 — Recommendation Contract
+Last completed: Stage 24 — Recommendation Contract
+Validation: TypeScript check passed; Unit Test Group O fields and fastest-route case verified; recommendation-contract diff check clean.
+Next: Stage 25 — Evidence Generation
 ```
 
 ### How to use this
@@ -1477,7 +1477,7 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 24 — Recommendation Contract
 
-- [ ] Stage 24 — Recommendation Contract
+- [X] Stage 24 — Recommendation Contract
 
 ---
 

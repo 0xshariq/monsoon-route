@@ -24,3 +24,21 @@ export type Route = {
   distanceMeters: number;
   geometry: GeoJSONLineString;
 };
+
+export type RecommendationStatus =
+  | "safer_option_found"
+  | "lowest_risk_available";
+
+export type RecommendationReason = {
+  timeDifferenceMinutes: number;
+  environmentalRiskDifference: number;
+  waterloggingRiskDifference: number;
+  avoidedHighRiskHotspots: number;
+  decisionScoreDifference: number;
+};
+
+export type Recommendation = {
+  recommendedRouteId: string;
+  status: RecommendationStatus;
+  reason: RecommendationReason;
+};

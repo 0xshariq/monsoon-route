@@ -15,6 +15,33 @@ export type RankedRecommendationCandidate = RecommendationCandidate & {
   travelTimeSeconds: number;
 };
 
+export type RecommendationMetrics = {
+  routeId: string;
+  travelTimeSeconds: number;
+  environmentalRisk: number;
+  waterloggingRisk: number;
+  decisionScore: number;
+  highRiskHotspotCount: number;
+};
+
+export type RecommendationInput = {
+  recommendedRoute: RecommendationMetrics;
+  fastestRoute: RecommendationMetrics;
+  status: "safer_option_found" | "lowest_risk_available";
+};
+
+export type RecommendationResult = {
+  recommendedRouteId: string;
+  status: "safer_option_found" | "lowest_risk_available";
+  reason: {
+    timeDifferenceMinutes: number;
+    environmentalRiskDifference: number;
+    waterloggingRiskDifference: number;
+    avoidedHighRiskHotspots: number;
+    decisionScoreDifference: number;
+  };
+};
+
 function isCritical(environmentalRisk: number): boolean {
   if (!Number.isFinite(environmentalRisk)) {
     throw new Error("Environmental risk must be a finite number.");
@@ -122,5 +149,88 @@ export function rankRoutes(
     .map(({ candidate }) => candidate);
 }
 
+/**
+ * Builds the deterministic recommendation contract from already-computed
+ * route metrics.
+ *
+ * Reason differences are expressed relative to the fastest route:
+ *
+ * - positive time difference means the recommendation takes longer;
+ * - positive environmental-risk difference means the recommendation avoids risk;
+ * - positive waterlogging-risk difference means the recommendation avoids
+ *   waterlogging risk;
+ * - positive avoided-hotspot count means the recommendation avoids more
+ *   high-risk hotspots;
+ * - positive decision-score difference means the recommendation has the
+ *   better decision score.
+ *
+ * When the recommended route is already the fastest route, all comparison
+ * differences are zero. This prevents the explanation from claiming that the
+ * recommended route is slower.
+ */
+export function createRecommendation({
+  recommendedRoute,
+  fastestRoute,
+  status,
+}: RecommendationInput): RecommendationResult {
+  validateRecommendationMetrics(recommendedRoute);
+  validateRecommendationMetrics(fastestRoute);
+
+  const timeDifferenceMinutes =
+    (recommendedRoute.travelTimeSeconds - fastestRoute.travelTimeSeconds) / 60;
+
+  const environmentalRiskDifference =
+    fastestRoute.environmentalRisk - recommendedRoute.environmentalRisk;
+
+  const waterloggingRiskDifference =
+    fastestRoute.waterloggingRisk - recommendedRoute.waterloggingRisk;
+
+  const avoidedHighRiskHotspots =
+    fastestRoute.highRiskHotspotCount -
+    recommendedRoute.highRiskHotspotCount;
+
+  const decisionScoreDifference =
+    fastestRoute.decisionScore - recommendedRoute.decisionScore;
+
+  return {
+    recommendedRouteId: recommendedRoute.routeId,
+    status,
+    reason: {
+      timeDifferenceMinutes,
+      environmentalRiskDifference,
+      waterloggingRiskDifference,
+      avoidedHighRiskHotspots,
+      decisionScoreDifference,
+    },
+  };
+}
+
+function validateRecommendationMetrics(
+  route: RecommendationMetrics,
+): void {
+  if (!route.routeId) {
+    throw new Error("Recommendation route must have a route ID.");
+  }
+
+  if (
+    !Number.isFinite(route.travelTimeSeconds) ||
+    !Number.isFinite(route.environmentalRisk) ||
+    !Number.isFinite(route.waterloggingRisk) ||
+    !Number.isFinite(route.decisionScore) ||
+    !Number.isFinite(route.highRiskHotspotCount)
+  ) {
+    throw new Error("Recommendation metrics must be finite numbers.");
+  }
+
+  if (route.travelTimeSeconds < 0) {
+    throw new Error("Recommendation travel time cannot be negative.");
+  }
+
+  if (route.highRiskHotspotCount < 0) {
+    throw new Error("High-risk hotspot count cannot be negative.");
+  }
+}
+
 export const getCriticalRiskGate = applyCriticalRiskGate;
 export const rankRecommendationCandidates = rankRoutes;
+export const buildRecommendation = createRecommendation;
