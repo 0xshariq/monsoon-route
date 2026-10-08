@@ -1274,9 +1274,9 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 1
-CURRENT STATUS: NOT STARTED
-CURRENT DAY: PRE-IMPLEMENTATION
+CURRENT STAGE: 3
+  CURRENT STATUS: NOT STARTED
+  CURRENT DAY: PRE-IMPLEMENTATION
 ```
 
 ### How to use this
@@ -1338,9 +1338,9 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 2 — Design Tokens
 
-- [ ] Stage 2 — Design Tokens
+- [X] Stage 2 — Design Tokens
   
-**Current cursor:** Stage 2
+**Current cursor:** Stage 3
 
 ---
 
