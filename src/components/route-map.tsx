@@ -1,11 +1,14 @@
 "use client";
 
+import { useEffect } from "react";
+
 import {
   APIProvider,
   AdvancedMarker,
   Map,
   Pin,
   Polyline,
+  useMap,
 } from "@vis.gl/react-google-maps";
 import type { Coordinates, RouteAnalysis } from "@/types/route";
 import type { WaterloggingHotspot } from "@/types/hotspot";
@@ -35,6 +38,69 @@ function toMapPath(route: RouteAnalysis): { lat: number; lng: number }[] {
     lat,
     lng: lon,
   }));
+}
+
+function getDisplayedCoordinates(
+  origin: Coordinates,
+  destination: Coordinates,
+  routes: RouteAnalysis[],
+): { lat: number; lng: number }[] {
+  return [
+    { lat: origin.lat, lng: origin.lon },
+    { lat: destination.lat, lng: destination.lon },
+    ...routes.flatMap(toMapPath),
+  ];
+}
+
+function MapCamera({
+  origin,
+  destination,
+  routes,
+}: {
+  origin: Coordinates;
+  destination: Coordinates;
+  routes: RouteAnalysis[];
+}) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!map) return;
+
+    const coordinates = getDisplayedCoordinates(origin, destination, routes);
+    if (coordinates.length === 0) return;
+
+    let north = -Infinity;
+    let south = Infinity;
+    let east = -Infinity;
+    let west = Infinity;
+
+    for (const coordinate of coordinates) {
+      north = Math.max(north, coordinate.lat);
+      south = Math.min(south, coordinate.lat);
+      east = Math.max(east, coordinate.lng);
+      west = Math.min(west, coordinate.lng);
+    }
+
+    const latitudeSpan = north - south;
+    const longitudeSpan = east - west;
+    const minimumSpan = 0.01;
+
+    if (latitudeSpan < minimumSpan) {
+      const latitudePadding = (minimumSpan - latitudeSpan) / 2;
+      north += latitudePadding;
+      south -= latitudePadding;
+    }
+
+    if (longitudeSpan < minimumSpan) {
+      const longitudePadding = (minimumSpan - longitudeSpan) / 2;
+      east += longitudePadding;
+      west -= longitudePadding;
+    }
+
+    map.fitBounds({ north, south, east, west }, 48);
+  }, [destination, map, origin, routes]);
+
+  return null;
 }
 
 function getRouteStyle(
@@ -141,7 +207,16 @@ export function RouteMap({
             fullscreenControl
             style={{ width: "100%", height: "100%", minHeight: 360 }}
           >
-            <AdvancedMarker position={{ lat: origin.lat, lng: origin.lon }} title="Origin">
+            <MapCamera
+              origin={origin}
+              destination={destination}
+              routes={routes}
+            />
+
+            <AdvancedMarker
+              position={{ lat: origin.lat, lng: origin.lon }}
+              title="Origin"
+            >
               <Pin
                 background={MAP_COLORS.origin}
                 borderColor={MAP_COLORS.origin}
@@ -180,21 +255,37 @@ export function RouteMap({
           className="absolute bottom-3 left-3 rounded-lg border border-border bg-card/95 p-3 text-xs shadow-md backdrop-blur"
         >
           <p className="mb-2 font-semibold text-foreground">Map legend</p>
+
           <div className="grid gap-2 text-muted-foreground sm:grid-cols-2">
             <span className="flex items-center gap-2">
-              <span className="h-1 w-5 rounded-full bg-primary" aria-hidden="true" />
+              <span
+                className="h-1 w-5 rounded-full bg-primary"
+                aria-hidden="true"
+              />
               Recommended route
             </span>
+
             <span className="flex items-center gap-2">
-              <span className="h-0.5 w-5 border-t-2 border-dashed border-muted-foreground" aria-hidden="true" />
+              <span
+                className="h-0.5 w-5 border-t-2 border-dashed border-muted-foreground"
+                aria-hidden="true"
+              />
               Alternative route
             </span>
+
             <span className="flex items-center gap-2">
-              <span className="h-2.5 w-2.5 rounded-full bg-danger" aria-hidden="true" />
+              <span
+                className="h-2.5 w-2.5 rounded-full bg-danger"
+                aria-hidden="true"
+              />
               High-risk hotspot
             </span>
+
             <span className="flex items-center gap-2">
-              <span className="h-2.5 w-2.5 rounded-full bg-warning" aria-hidden="true" />
+              <span
+                className="h-2.5 w-2.5 rounded-full bg-warning"
+                aria-hidden="true"
+              />
               Waterlogging hotspot
             </span>
           </div>
