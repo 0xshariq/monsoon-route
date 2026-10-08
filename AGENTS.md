@@ -1274,14 +1274,14 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 21
-  CURRENT STATUS: IN PROGRESS
-  CURRENT DAY: IMPLEMENTATION
-  BLOCKER: None.
+CURRENT STAGE: 22
+CURRENT STATUS: IN PROGRESS
+CURRENT DAY: IMPLEMENTATION
+BLOCKER: None.
 
-  Last completed: Stage 20 — Time Penalty
-  Validation: TypeScript check passed; Unit Test Group K cases K1/K2/K3 verified; time-penalty diff check clean.
-  Next: Stage 21 — Decision Score
+Last completed: Stage 21 — Decision Score
+Validation: TypeScript check passed; Unit Test Group L fixture verified; decision-score diff check clean.
+Next: Stage 22 — Critical Risk Gate
 ```
 
 ### How to use this
@@ -1459,7 +1459,7 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 21 — Decision Score
 
-- [ ] Stage 21 — Decision Score
+- [X] Stage 21 — Decision Score
 
 ---
 
