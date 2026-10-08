@@ -1274,14 +1274,14 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 37
+CURRENT STAGE: 39
 CURRENT STATUS: IN PROGRESS
 CURRENT DAY: IMPLEMENTATION
 BLOCKER: None.
 
-Last completed: Stage 36 — Deterministic Explanation
-Validation: Added deterministic explanation generation from recommendation, duration, waterlogging, rain, and environmental-risk results; ESLint and git diff checks passed.
-Next: Stage 37 — AI Boundary
+Last completed: Stage 38 — ExplanationContext
+Validation: Added the narrow ExplanationContext contract containing recommendation, recommended-route summary with evidence, and fastest-route summary; ESLint and git diff checks passed.
+Next: Stage 39 — /api/explain-route
 ```
 
 ### How to use this
@@ -1553,13 +1553,13 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 37 — AI Boundary
 
-- [ ] Stage 37 — AI Boundary
+- [x] Stage 37 — AI Boundary
 
 ---
 
 ## Stage 38 — ExplanationContext
 
-- [ ] Stage 38 — ExplanationContext
+- [x] Stage 38 — ExplanationContext
 
 ---
 
