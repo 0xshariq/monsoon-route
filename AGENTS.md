@@ -1274,10 +1274,10 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 3
-  CURRENT STATUS: BLOCKED
+CURRENT STAGE: 4
+  CURRENT STATUS: IN PROGRESS
   CURRENT DAY: IMPLEMENTATION
-  BLOCKER: NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is not configured, so live map rendering cannot be acceptance-tested.
+  BLOCKER: None. Stage 3 implementation is complete; live map acceptance was previously blocked only by the local API key.
 ```
 
 ### How to use this
