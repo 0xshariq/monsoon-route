@@ -1274,14 +1274,14 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 16
+CURRENT STAGE: 17
   CURRENT STATUS: IN PROGRESS
   CURRENT DAY: IMPLEMENTATION
   BLOCKER: None.
 
-  Last completed: Stage 15 — Polygon Hotspot Handling
-  Validation: pnpm exec eslint src/lib/geo/hotspot-distance.ts; git diff --check; pnpm exec tsc --noEmit (blocked by pre-existing google namespace error in src/components/route-form.tsx)
-  Next: Stage 16 — One Hotspot, One Exposure
+  Last completed: Stage 16 — One Hotspot, One Exposure
+  Validation: pnpm exec eslint src/lib/analysis/waterlogging-risk.ts; git diff --check; pnpm exec tsc --noEmit (blocked by pre-existing google namespace error in src/components/route-form.tsx)
+  Next: Stage 17 — Waterlogging Risk Formula
 ```
 
 ### How to use this
@@ -1345,7 +1345,7 @@ Do not invent a solution merely to keep progress green.
 
 - [X] Stage 2 — Design Tokens
   
-**Current cursor:** Stage 16
+**Current cursor:** Stage 17
 
 ---
 
@@ -1429,7 +1429,7 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 16 — One Hotspot, One Exposure
 
-- [ ] Stage 16 — One Hotspot, One Exposure
+- [X] Stage 16 — One Hotspot, One Exposure
 
 ---
 
