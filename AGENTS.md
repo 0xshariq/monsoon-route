@@ -1274,14 +1274,14 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 39
+CURRENT STAGE: 40
 CURRENT STATUS: IN PROGRESS
 CURRENT DAY: IMPLEMENTATION
 BLOCKER: None.
 
-Last completed: Stage 38 — ExplanationContext
-Validation: Added the narrow ExplanationContext contract containing recommendation, recommended-route summary with evidence, and fastest-route summary; ESLint and git diff checks passed.
-Next: Stage 39 — /api/explain-route
+Last completed: Stage 39 — /api/explain-route
+Validation: Added a node-runtime POST endpoint with strict Zod ExplanationContext validation, deterministic-boundary prompting, Strands/Ollama invocation, structured JSON success responses, and 400/502/503 failure responses.
+Next: Stage 40 — Strands TypeScript Integration
 ```
 
 ### How to use this
@@ -1565,7 +1565,7 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 39 — `/api/explain-route`
 
-- [ ] Stage 39 — `/api/explain-route`
+- [x] Stage 39 — `/api/explain-route`
 
 ---
 
