@@ -33,7 +33,7 @@ type Coordinates = {
 
 type TravelMode = "DRIVE" | "TWO_WHEELER";
 
-type RouteFormValues = {
+export type RouteFormValues = {
   origin: Coordinates;
   destination: Coordinates;
   travelMode: TravelMode;
@@ -299,4 +299,4 @@ export function RouteForm({ onSubmit }: RouteFormProps) {
 }
 
 export default RouteForm;
-export type { Coordinates, RouteFormValues, TravelMode };
+export type { Coordinates, TravelMode };
