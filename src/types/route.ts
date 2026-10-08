@@ -76,3 +76,19 @@ export type RouteAnalysis = {
   decisionScore: number;
   evidence: AnalysisEvidence[];
 };
+
+export type ExplanationRouteSummary = {
+  durationMinutes: number;
+  environmentalRiskScore: number;
+  waterloggingRiskScore: number;
+  rainRiskScore: number;
+  evidence?: AnalysisEvidence[];
+};
+
+export type ExplanationContext = {
+  recommendation: Recommendation;
+  recommendedRoute: ExplanationRouteSummary & {
+    evidence: AnalysisEvidence[];
+  };
+  fastestRoute: ExplanationRouteSummary;
+};
