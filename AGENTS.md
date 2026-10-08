@@ -1274,14 +1274,14 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 31
+CURRENT STAGE: 32
 CURRENT STATUS: IN PROGRESS
 CURRENT DAY: IMPLEMENTATION
 BLOCKER: None.
 
-Last completed: Stage 30 — Map Camera
-Validation: Added data-driven map bounds from origin, destination, and all displayed route geometries, with camera fitting and a minimum viewport span for degenerate bounds.
-Next: Stage 31 — Route Cards
+Last completed: Stage 31 — Route Cards
+Validation: Implemented the route comparison cards using the existing shadcn Card and Badge components, displaying route duration, risk metrics, recommendation status, and travel-time trade-offs.
+Next: Stage 32 — Recommendation Section
 ```
 
 ### How to use this
@@ -1517,7 +1517,7 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 31 — Route Cards
 
-- [ ] Stage 31 — Route Cards
+- [x] Stage 31 — Route Cards
 
 ---
 
