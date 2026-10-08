@@ -1274,14 +1274,14 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 29
+CURRENT STAGE: 30
 CURRENT STATUS: IN PROGRESS
 CURRENT DAY: IMPLEMENTATION
 BLOCKER: None.
 
-Last completed: Stage 28 — Frontend Route Form
-Validation: Added the Shadcn-based route form with Google Places selection, browser geolocation, travel mode, submission validation, current departure time, and the frozen loading label.
-Next: Stage 29 — Route Map
+Last completed: Stage 29 — Route Map
+Validation: Added data-driven route polylines, origin/destination markers, route-relevant hotspot markers, and the frozen map legend without moving analysis logic into the frontend.
+Next: Stage 30 — Map Camera
 ```
 
 ### How to use this
@@ -1344,8 +1344,6 @@ Do not invent a solution merely to keep progress green.
 ## Stage 2 — Design Tokens
 
 - [X] Stage 2 — Design Tokens
-  
-**Current cursor:** Stage 28
 
 ---
 
@@ -1507,7 +1505,7 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 29 — Route Map
 
-- [ ] Stage 29 — Route Map
+- [X] Stage 29 — Route Map
 
 ---
 

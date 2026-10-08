@@ -20,7 +20,13 @@ export default function MonsoonRouteHome() {
 
         <RouteForm />
 
-        <RouteMap />
+        <RouteMap origin={{
+          lat: 0,
+          lon: 0
+        }} destination={{
+          lat: 0,
+          lon: 0
+        }} routes={[]} recommendedRouteId={""} hotspots={[]} />
       </div>
     </main>
   );
