@@ -1274,14 +1274,14 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 46
+CURRENT STAGE: 49
 CURRENT STATUS: IN PROGRESS
 CURRENT DAY: IMPLEMENTATION
 BLOCKER: None.
 
-Last completed: Stage 45 — AI UI
-Validation: Added the focused explanation UI with initial, loading, success, and deterministic-fallback states; fallback explicitly preserves the deterministic explanation and labels AI unavailability.
-Next: Stage 46 — AI Failure Test
+Last completed: Stage 48 — Responsive Behavior
+Validation: Added mobile-first map height, compact legend placement, and responsive page spacing while preserving readable desktop layouts.
+Next: Stage 49 — Complete Analyze Integration
 ```
 
 ### How to use this
@@ -1619,7 +1619,7 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 48 — Responsive Behavior
 
-- [ ] Stage 48 — Responsive Behavior
+- [x] Stage 48 — Responsive Behavior
 
 ---
 
