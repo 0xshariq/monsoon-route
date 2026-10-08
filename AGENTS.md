@@ -1332,7 +1332,7 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 1 — Next.js Foundation
 
-- [ ] Stage 1 — Next.js Foundation
+- [X] Stage 1 — Next.js Foundation
 
 **Current cursor:** Stage 1
 
