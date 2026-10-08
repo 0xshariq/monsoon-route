@@ -1274,14 +1274,14 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 41
+CURRENT STAGE: 42
 CURRENT STATUS: IN PROGRESS
 CURRENT DAY: IMPLEMENTATION
 BLOCKER: None.
 
-Last completed: Stage 40 — Strands TypeScript Integration
-Validation: Updated the TypeScript integration to use the current `ollama` provider export with `Agent` and `VercelModel`; ESLint and diff checks passed.
-Next: Stage 41 — Ollama
+Last completed: Stage 41 — Ollama
+Validation: Configured the server-side Ollama base URL with the required localhost default and model selection through OLLAMA_MODEL; ESLint and diff checks passed.
+Next: Stage 42 — Strands Agent Configuration
 ```
 
 ### How to use this
@@ -1577,7 +1577,7 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 41 — Ollama
 
-- [ ] Stage 41 — Ollama
+- [x] Stage 41 — Ollama
 
 ---
 

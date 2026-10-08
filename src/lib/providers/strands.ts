@@ -10,7 +10,9 @@ const systemPrompt =
 export function createExplanationAgent(): Agent {
   return new Agent({
     model: new VercelModel({
-      provider: ollama("llama3.2") as never,
+      provider: createOllama({
+        baseURL: process.env.OLLAMA_BASE_URL ?? "http://localhost:11434",
+      })(process.env.OLLAMA_MODEL ?? "llama3.2") as never,
     }),
     systemPrompt,
     printer: false,
