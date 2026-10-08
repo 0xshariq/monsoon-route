@@ -1,3 +1,5 @@
+import type { RecommendationEvidence } from "@/types/route";
+
 export const CRITICAL_ENVIRONMENTAL_RISK = 90;
 
 export type RecommendationCandidate = {
@@ -22,6 +24,9 @@ export type RecommendationMetrics = {
   waterloggingRisk: number;
   decisionScore: number;
   highRiskHotspotCount: number;
+  rainRisk?: number;
+  totalPrecipitationMm?: number;
+  peakHourlyPrecipitationMm?: number;
 };
 
 export type RecommendationInput = {
@@ -40,6 +45,7 @@ export type RecommendationResult = {
     avoidedHighRiskHotspots: number;
     decisionScoreDifference: number;
   };
+  evidence: RecommendationEvidence[];
 };
 
 function isCritical(environmentalRisk: number): boolean {
@@ -192,6 +198,13 @@ export function createRecommendation({
   const decisionScoreDifference =
     fastestRoute.decisionScore - recommendedRoute.decisionScore;
 
+  const evidence = generateRecommendationEvidence({
+    recommendedRoute,
+    timeDifferenceMinutes,
+    waterloggingRiskDifference,
+    avoidedHighRiskHotspots,
+  });
+
   return {
     recommendedRouteId: recommendedRoute.routeId,
     status,
@@ -202,7 +215,70 @@ export function createRecommendation({
       avoidedHighRiskHotspots,
       decisionScoreDifference,
     },
+    evidence,
   };
+}
+
+function generateRecommendationEvidence({
+  recommendedRoute,
+  timeDifferenceMinutes,
+  waterloggingRiskDifference,
+  avoidedHighRiskHotspots,
+}: {
+  recommendedRoute: RecommendationMetrics;
+  timeDifferenceMinutes: number;
+  waterloggingRiskDifference: number;
+  avoidedHighRiskHotspots: number;
+}): RecommendationEvidence[] {
+  const evidence: RecommendationEvidence[] = [];
+
+  if (avoidedHighRiskHotspots > 0) {
+    evidence.push({
+      type: "waterlogging",
+      message: `${recommendedRoute.routeId} avoids ${avoidedHighRiskHotspots} high-risk hotspot${avoidedHighRiskHotspots === 1 ? "" : "s"}.`,
+    });
+  } else if (waterloggingRiskDifference > 0) {
+    evidence.push({
+      type: "waterlogging",
+      message: `${recommendedRoute.routeId} has lower estimated waterlogging risk.`,
+    });
+  }
+
+  if (
+    recommendedRoute.rainRisk !== undefined &&
+    Number.isFinite(recommendedRoute.rainRisk) &&
+    recommendedRoute.rainRisk > 0
+  ) {
+    evidence.push({
+      type: "rain",
+      message: `${recommendedRoute.routeId} accounts for forecast rain risk during the journey window.`,
+    });
+  }
+
+  if (timeDifferenceMinutes > 0) {
+    evidence.push({
+      type: "travel-time",
+      message: `${recommendedRoute.routeId} takes about ${formatMinutes(timeDifferenceMinutes)} more minute${Math.abs(timeDifferenceMinutes - 1) < 0.000001 ? "" : "s"} than the fastest route.`,
+    });
+  } else if (timeDifferenceMinutes === 0) {
+    evidence.push({
+      type: "travel-time",
+      message: `${recommendedRoute.routeId} is the fastest available route.`,
+    });
+  }
+
+  if (evidence.length === 0) {
+    evidence.push({
+      type: "travel-time",
+      message: `${recommendedRoute.routeId} is recommended based on the computed route comparison.`,
+    });
+  }
+
+  return evidence;
+}
+
+function formatMinutes(minutes: number): number {
+  return Math.round(minutes * 10) / 10;
 }
 
 function validateRecommendationMetrics(
