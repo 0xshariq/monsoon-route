@@ -1334,13 +1334,13 @@ Do not invent a solution merely to keep progress green.
 
 - [X] Stage 1 — Next.js Foundation
 
-**Current cursor:** Stage 1
-
 ---
 
 ## Stage 2 — Design Tokens
 
 - [ ] Stage 2 — Design Tokens
+  
+**Current cursor:** Stage 2
 
 ---
 
