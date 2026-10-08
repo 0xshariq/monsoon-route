@@ -1275,8 +1275,9 @@ This is the most important section for continuing work across coding-agent sessi
 
 ```text
 CURRENT STAGE: 3
-  CURRENT STATUS: NOT STARTED
-  CURRENT DAY: PRE-IMPLEMENTATION
+  CURRENT STATUS: BLOCKED
+  CURRENT DAY: IMPLEMENTATION
+  BLOCKER: NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is not configured, so live map rendering cannot be acceptance-tested.
 ```
 
 ### How to use this
@@ -1694,10 +1695,31 @@ Blockers:
 Next Stage:
 ```
 
-Example:
+  Current session progress:
 
-```text
-MonsoonRoute Progress
+  ```text
+  MonsoonRoute Progress
+
+  Current Stage: 3 — Google Maps JavaScript Integration
+  Completed: Implementation complete; acceptance blocked by missing browser API key
+  Files changed:
+    src/components/route-map.tsx
+    src/app/page.tsx
+    AGENTS.md
+  Checks run:
+    pnpm lint
+    pnpm build
+    agent-browser preview verification
+  Tests passed: lint and build
+  Tests failed: live Google map verification (missing NEXT_PUBLIC_GOOGLE_MAPS_API_KEY)
+  Blockers: Configure NEXT_PUBLIC_GOOGLE_MAPS_API_KEY in the project environment
+  Next Stage: 3 — Google Maps JavaScript Integration
+  ```
+
+  Example:
+
+  ```text
+  MonsoonRoute Progress
 
 Current Stage: 9
 Completed: Stage 8 — Zod Request Validation
