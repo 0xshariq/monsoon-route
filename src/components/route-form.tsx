@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { APIProvider, useMapsLibrary } from "@vis.gl/react-google-maps";
 
 type Coordinates = {
@@ -89,6 +89,32 @@ function RouteFormFields({ onSubmit }: RouteFormProps) {
   const [origin, setOrigin] = useState<Coordinates | null>(null);
   const [destination, setDestination] = useState<Coordinates | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [locationStatus, setLocationStatus] = useState<"idle" | "loading" | "selected">("idle");
+
+  const useMyLocation = useCallback(() => {
+    if (!navigator.geolocation) {
+      setError("Location is not supported by this browser.");
+      return;
+    }
+
+    setError(null);
+    setLocationStatus("loading");
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => {
+        setOrigin({ lat: coords.latitude, lon: coords.longitude });
+        setLocationStatus("selected");
+      },
+      (geolocationError) => {
+        setLocationStatus("idle");
+        setError(
+          geolocationError.code === geolocationError.PERMISSION_DENIED
+            ? "Location permission was denied. Enter your starting point instead."
+            : "We could not determine your location. Enter your starting point instead.",
+        );
+      },
+      { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 },
+    );
+  }, []);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -111,12 +137,28 @@ function RouteFormFields({ onSubmit }: RouteFormProps) {
         </p>
       </div>
       <div className="grid gap-4 sm:grid-cols-2">
-        <PlaceInput
-          id="origin"
-          label="From"
-          placeholder="Enter your starting point"
-          onCoordinatesChange={setOrigin}
-        />
+        <div className="flex flex-col gap-2">
+          <PlaceInput
+            id="origin"
+            label="From"
+            placeholder="Enter your starting point"
+            onCoordinatesChange={(coordinates) => {
+              setOrigin(coordinates);
+              setLocationStatus("idle");
+            }}
+          />
+          <button
+            type="button"
+            onClick={useMyLocation}
+            disabled={locationStatus === "loading"}
+            className="self-start text-sm font-medium text-primary underline-offset-4 hover:underline disabled:cursor-wait disabled:opacity-60"
+          >
+            {locationStatus === "loading" ? "Finding your location…" : "Use my location"}
+          </button>
+          {locationStatus === "selected" ? (
+            <p className="text-xs text-muted-foreground">Current location selected as your starting point.</p>
+          ) : null}
+        </div>
         <PlaceInput
           id="destination"
           label="To"

@@ -1274,7 +1274,7 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 5
+CURRENT STAGE: 6
   CURRENT STATUS: NOT STARTED
   CURRENT DAY: IMPLEMENTATION
   BLOCKER: None.
@@ -1341,7 +1341,7 @@ Do not invent a solution merely to keep progress green.
 
 - [X] Stage 2 — Design Tokens
   
-**Current cursor:** Stage 3
+**Current cursor:** Stage 6
 
 ---
 
@@ -1353,13 +1353,13 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 4 — Google Place Autocomplete
 
-- [ ] Stage 4 — Google Place Autocomplete
+- [X] Stage 4 — Google Place Autocomplete
 
 ---
 
 ## Stage 5 — Browser Geolocation
 
-- [ ] Stage 5 — Browser Geolocation
+- [X] Stage 5 — Browser Geolocation
 
 ---
 
