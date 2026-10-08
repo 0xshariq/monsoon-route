@@ -1274,14 +1274,14 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 13
+CURRENT STAGE: 14
 CURRENT STATUS: IN PROGRESS
   CURRENT DAY: IMPLEMENTATION
   BLOCKER: None.
-
-  Last completed: Stage 12 — Hotspot Dataset
-  Validation: node --check data/mumbai-region-waterlogging-hotspots.geojson; git diff --check
-  Next: Stage 13 — Spatial Candidate Filtering
+  
+  Last completed: Stage 13 — Spatial Candidate Filtering
+  Validation: pnpm exec eslint src/lib/geo/spatial-filter.ts; git diff --check
+  Next: Stage 14 — Point Hotspot Distance
 ```
 
 ### How to use this
@@ -1345,7 +1345,7 @@ Do not invent a solution merely to keep progress green.
 
 - [X] Stage 2 — Design Tokens
   
-**Current cursor:** Stage 13
+**Current cursor:** Stage 14
 
 ---
 
@@ -1411,7 +1411,7 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 13 — Spatial Candidate Filtering
 
-- [ ] Stage 13 — Spatial Candidate Filtering
+- [X] Stage 13 — Spatial Candidate Filtering
 
 ---
 
