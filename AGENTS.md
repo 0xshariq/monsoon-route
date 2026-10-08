@@ -1274,10 +1274,14 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 8
+CURRENT STAGE: 9
   CURRENT STATUS: NOT STARTED
   CURRENT DAY: IMPLEMENTATION
   BLOCKER: None.
+
+  Last completed: Stage 8 — Zod Request Validation
+  Validation: pnpm exec eslint src/lib/validation.ts; git diff --check
+  Next: Stage 9 — Google Routes API Provider
 ```
 
 ### How to use this
@@ -1341,7 +1345,7 @@ Do not invent a solution merely to keep progress green.
 
 - [X] Stage 2 — Design Tokens
   
-**Current cursor:** Stage 7
+**Current cursor:** Stage 9
 
 ---
 
@@ -1377,7 +1381,7 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 8 — Zod Request Validation
 
-- [ ] Stage 8 — Zod Request Validation
+- [X] Stage 8 — Zod Request Validation
 
 ---
 
