@@ -1274,14 +1274,14 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 43
+CURRENT STAGE: 44
 CURRENT STATUS: IN PROGRESS
 CURRENT DAY: IMPLEMENTATION
 BLOCKER: None.
 
-Last completed: Stage 42 — Strands Agent Configuration
-Validation: Configured one no-tools Strands agent with one VercelModel, one constrained system prompt, and Zod-validated structured output; ESLint, TypeScript, and diff checks passed.
-Next: Stage 43 — AI System Prompt
+Last completed: Stage 43 — AI System Prompt
+Validation: Added the explicit deterministic-explanation safety boundary covering supplied context, route selection, scores, weather, hotspots, evidence, safety claims, and insufficient evidence.
+Next: Stage 44 — Structured AI Output
 ```
 
 ### How to use this
@@ -1589,7 +1589,7 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 43 — AI System Prompt
 
-- [ ] Stage 43 — AI System Prompt
+- [x] Stage 43 — AI System Prompt
 
 ---
 
