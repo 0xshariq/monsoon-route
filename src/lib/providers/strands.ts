@@ -1,6 +1,6 @@
 import { Agent } from "@strands-agents/sdk";
 import { VercelModel } from "@strands-agents/sdk/models/vercel";
-import { createOllama } from "ai-sdk-ollama";
+import { ollama } from "ai-sdk-ollama";
 export type ExplanationInput = Record<string, unknown>;
 
 const systemPrompt =
