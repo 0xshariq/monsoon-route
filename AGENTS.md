@@ -1274,14 +1274,14 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 19
+CURRENT STAGE: 20
   CURRENT STATUS: IN PROGRESS
   CURRENT DAY: IMPLEMENTATION
   BLOCKER: None.
 
-  Last completed: Stage 18 — Rain Analysis
-  Validation: pnpm exec eslint src/lib/analysis/rain-risk.ts; git diff --check; canonical formula check passed
-  Next: Stage 19 — Environmental Risk
+  Last completed: Stage 19 — Environmental Risk
+  Validation: pnpm exec eslint src/lib/analysis/environmental-risk.ts; git diff --check; canonical formula check passed
+  Next: Stage 20 — Time Penalty
 ```
 
 ### How to use this
@@ -1345,7 +1345,7 @@ Do not invent a solution merely to keep progress green.
 
 - [X] Stage 2 — Design Tokens
   
-**Current cursor:** Stage 19
+**Current cursor:** Stage 20
 
 ---
 
@@ -1447,7 +1447,7 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 19 — Environmental Risk
 
-- [ ] Stage 19 — Environmental Risk
+- [X] Stage 19 — Environmental Risk
 
 ---
 
