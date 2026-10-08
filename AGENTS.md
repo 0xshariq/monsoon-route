@@ -1274,14 +1274,14 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 27
+CURRENT STAGE: 28
 CURRENT STATUS: IN PROGRESS
 CURRENT DAY: IMPLEMENTATION
 BLOCKER: None.
 
-Last completed: Stage 26 — Final Internal RouteAnalysis
-Validation: Added the normalized RouteAnalysis contract with typed waterlogging, rain, environmental, time-penalty, decision-score, and deterministic evidence fields; raw provider structures are excluded from the contract.
-Next: Stage 27 — /api/analyze-route
+Last completed: Stage 27 — /api/analyze-route
+Validation: Added the Node.js route handler for the deterministic analyze pipeline, including request validation, Google Routes, Open-Meteo, hotspot geometry/risk analysis, environmental risk, time penalty, decision score, critical-risk gating, ranking, recommendation, evidence, and the frozen API error contract.
+Next: Stage 28 — Frontend Route Form
 ```
 
 ### How to use this
@@ -1495,7 +1495,7 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 27 — `/api/analyze-route`
 
-- [ ] Stage 27 — `/api/analyze-route`
+- [X] Stage 27 — `/api/analyze-route`
 
 ---
 
