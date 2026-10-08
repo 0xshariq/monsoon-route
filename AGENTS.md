@@ -1274,14 +1274,14 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 30
+CURRENT STAGE: 31
 CURRENT STATUS: IN PROGRESS
 CURRENT DAY: IMPLEMENTATION
 BLOCKER: None.
 
-Last completed: Stage 29 — Route Map
-Validation: Added data-driven route polylines, origin/destination markers, route-relevant hotspot markers, and the frozen map legend without moving analysis logic into the frontend.
-Next: Stage 30 — Map Camera
+Last completed: Stage 30 — Map Camera
+Validation: Added data-driven map bounds from origin, destination, and all displayed route geometries, with camera fitting and a minimum viewport span for degenerate bounds.
+Next: Stage 31 — Route Cards
 ```
 
 ### How to use this
@@ -1511,7 +1511,7 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 30 — Map Camera
 
-- [ ] Stage 30 — Map Camera
+- [X] Stage 30 — Map Camera
 
 ---
 
