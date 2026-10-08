@@ -1274,14 +1274,14 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 37
+CURRENT STAGE: 38
 CURRENT STATUS: IN PROGRESS
 CURRENT DAY: IMPLEMENTATION
 BLOCKER: None.
 
-Last completed: Stage 36 — Deterministic Explanation
-Validation: Added deterministic explanation generation from recommendation, duration, waterlogging, rain, and environmental-risk results; ESLint and git diff checks passed.
-Next: Stage 37 — AI Boundary
+Last completed: Stage 37 — AI Boundary
+Validation: Added the server-side Strands/VercelModel/Ollama explanation boundary and node runtime endpoint with request validation; ESLint and git diff checks passed.
+Next: Stage 38 — ExplanationContext
 ```
 
 ### How to use this
