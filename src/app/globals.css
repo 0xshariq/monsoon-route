@@ -7,7 +7,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
+  --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -39,13 +39,21 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --radius-sm: calc(var(--radius) * 0.5);
-  --radius-md: calc(var(--radius) * 1);
-  --radius-lg: calc(var(--radius) * 1.5);
-  --radius-xl: calc(var(--radius) * 2);
-  --radius-2xl: calc(var(--radius) * 3);
-  --radius-3xl: calc(var(--radius) * 4);
-  --radius-4xl: calc(var(--radius) * 6);
+  --radius-sm: var(--radius-1);
+  --radius-md: var(--radius-2);
+  --radius-lg: var(--radius-3);
+  --radius-xl: var(--radius-3);
+  --radius-2xl: var(--radius-3);
+  --radius-3xl: var(--radius-3);
+  --radius-4xl: var(--radius-3);
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 24px;
+  --radius-1: 4px;
+  --radius-2: 8px;
+  --radius-3: 12px;
   --color-primary: var(--primary);
   --color-primary-hover: var(--primary-hover);
   --color-primary-light: var(--primary-light);
@@ -61,12 +69,12 @@
 }
 
 :root {
-  --background: #F9FAFB;
-  --foreground: #080F14;
-  --card: #FFFFFF;
-  --card-foreground: #080F14;
-  --popover: #FFFFFF;
-  --popover-foreground: #080F14;
+  --background: #080F14;
+  --foreground: #F9FAFB;
+  --card: #111827;
+  --card-foreground: #F9FAFB;
+  --popover: #111827;
+  --popover-foreground: #F9FAFB;
   --primary: #3682F6;
   --primary-foreground: #FFFFFF;
   --primary-hover: #2563EB;
