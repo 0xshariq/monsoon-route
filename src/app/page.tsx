@@ -1,3 +1,4 @@
+import RouteForm from "@/components/route-form";
 import RouteMap from "@/components/route-map";
 
 export default function MonsoonRouteHome() {
@@ -12,9 +13,12 @@ export default function MonsoonRouteHome() {
             Choose the safer route when rain changes the road.
           </h1>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-            Compare routes using forecast rain, waterlogging evidence, and travel-time trade-offs.
+            Compare routes using forecast rain, waterlogging evidence, and
+            travel-time trade-offs.
           </p>
         </header>
+
+        <RouteForm />
 
         <RouteMap />
       </div>

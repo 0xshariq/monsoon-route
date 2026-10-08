@@ -1274,14 +1274,14 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 28
+CURRENT STAGE: 29
 CURRENT STATUS: IN PROGRESS
 CURRENT DAY: IMPLEMENTATION
 BLOCKER: None.
 
-Last completed: Stage 27 — /api/analyze-route
-Validation: Added the Node.js route handler for the deterministic analyze pipeline, including request validation, Google Routes, Open-Meteo, hotspot geometry/risk analysis, environmental risk, time penalty, decision score, critical-risk gating, ranking, recommendation, evidence, and the frozen API error contract.
-Next: Stage 28 — Frontend Route Form
+Last completed: Stage 28 — Frontend Route Form
+Validation: Added the Shadcn-based route form with Google Places selection, browser geolocation, travel mode, submission validation, current departure time, and the frozen loading label.
+Next: Stage 29 — Route Map
 ```
 
 ### How to use this
@@ -1345,7 +1345,7 @@ Do not invent a solution merely to keep progress green.
 
 - [X] Stage 2 — Design Tokens
   
-**Current cursor:** Stage 27
+**Current cursor:** Stage 28
 
 ---
 
@@ -1501,7 +1501,7 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 28 — Frontend Route Form
 
-- [ ] Stage 28 — Frontend Route Form
+- [X] Stage 28 — Frontend Route Form
 
 ---
 

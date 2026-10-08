@@ -1,20 +1,47 @@
 "use client";
 
-import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
+import {
+  FormEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { APIProvider, useMapsLibrary } from "@vis.gl/react-google-maps";
+
+import { Button } from "@/components/ui/button";
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type Coordinates = {
   lat: number;
   lon: number;
 };
 
+type TravelMode = "DRIVE" | "TWO_WHEELER";
+
 type RouteFormValues = {
   origin: Coordinates;
   destination: Coordinates;
+  travelMode: TravelMode;
+  departureTime: string;
 };
 
 type RouteFormProps = {
-  onSubmit?: (values: RouteFormValues) => void;
+  onSubmit?: (values: RouteFormValues) => void | Promise<void>;
 };
 
 const MUMBAI_BOUNDS = {
@@ -28,16 +55,27 @@ function PlaceInput({
   id,
   label,
   placeholder,
+  coordinates,
   onCoordinatesChange,
+  error,
 }: {
   id: string;
   label: string;
   placeholder: string;
+  coordinates: Coordinates | null;
   onCoordinatesChange: (coordinates: Coordinates | null) => void;
+  error?: string;
 }) {
   const places = useMapsLibrary("places");
   const inputRef = useRef<HTMLInputElement>(null);
-  const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
+  const autocompleteRef = useRef<
+    InstanceType<NonNullable<typeof places>["Autocomplete"]> | null
+  >(null);
+  const coordinatesRef = useRef(coordinates);
+
+  useEffect(() => {
+    coordinatesRef.current = coordinates;
+  }, [coordinates]);
 
   useEffect(() => {
     if (!places || !inputRef.current) return;
@@ -50,14 +88,20 @@ function PlaceInput({
     });
 
     autocompleteRef.current = autocomplete;
+
     const listener = autocomplete.addListener("place_changed", () => {
-      const location = autocomplete.getPlace().geometry?.location;
+      const place = autocomplete.getPlace();
+      const location = place.geometry?.location;
+
       if (!location) {
         onCoordinatesChange(null);
         return;
       }
 
-      onCoordinatesChange({ lat: location.lat(), lon: location.lng() });
+      onCoordinatesChange({
+        lat: location.lat(),
+        lon: location.lng(),
+      });
     });
 
     return () => {
@@ -67,29 +111,36 @@ function PlaceInput({
   }, [onCoordinatesChange, places]);
 
   return (
-    <div className="flex flex-col gap-2">
-      <label htmlFor={id} className="text-sm font-medium text-foreground">
-        {label}
-      </label>
-      <input
+    <Field data-invalid={Boolean(error)}>
+      <FieldLabel htmlFor={id}>{label}</FieldLabel>
+      <Input
         ref={inputRef}
         id={id}
         name={id}
         type="text"
         autoComplete="off"
         placeholder={placeholder}
-        onChange={() => onCoordinatesChange(null)}
-        className="h-11 rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none transition placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20"
+        aria-invalid={Boolean(error)}
+        onChange={() => {
+          if (coordinatesRef.current) {
+            onCoordinatesChange(null);
+          }
+        }}
       />
-    </div>
+      {error ? <FieldError>{error}</FieldError> : null}
+    </Field>
   );
 }
 
 function RouteFormFields({ onSubmit }: RouteFormProps) {
   const [origin, setOrigin] = useState<Coordinates | null>(null);
   const [destination, setDestination] = useState<Coordinates | null>(null);
+  const [travelMode, setTravelMode] = useState<TravelMode>("DRIVE");
   const [error, setError] = useState<string | null>(null);
-  const [locationStatus, setLocationStatus] = useState<"idle" | "loading" | "selected">("idle");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [locationStatus, setLocationStatus] = useState<
+    "idle" | "loading" | "selected"
+  >("idle");
 
   const useMyLocation = useCallback(() => {
     if (!navigator.geolocation) {
@@ -99,6 +150,7 @@ function RouteFormFields({ onSubmit }: RouteFormProps) {
 
     setError(null);
     setLocationStatus("loading");
+
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
         setOrigin({ lat: coords.latitude, lon: coords.longitude });
@@ -112,11 +164,15 @@ function RouteFormFields({ onSubmit }: RouteFormProps) {
             : "We could not determine your location. Enter your starting point instead.",
         );
       },
-      { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 },
+      {
+        enableHighAccuracy: false,
+        timeout: 10000,
+        maximumAge: 300000,
+      },
     );
   }, []);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!origin || !destination) {
@@ -125,54 +181,109 @@ function RouteFormFields({ onSubmit }: RouteFormProps) {
     }
 
     setError(null);
-    onSubmit?.({ origin, destination });
+    setIsSubmitting(true);
+
+    try {
+      await onSubmit?.({
+        origin,
+        destination,
+        travelMode,
+        departureTime: new Date().toISOString(),
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4 rounded-xl border border-border bg-card p-5 shadow-sm">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-5 rounded-xl border border-border bg-card p-5 shadow-sm"
+    >
       <div>
         <h2 className="text-lg font-semibold text-foreground">Plan your route</h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          Choose locations from the suggestions so we can use their exact coordinates.
+          Choose locations from the suggestions so we can use their exact
+          coordinates.
         </p>
       </div>
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div className="flex flex-col gap-2">
+
+      <FieldGroup>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <FieldGroup>
+            <PlaceInput
+              id="origin"
+              label="From"
+              placeholder="Enter your starting point"
+              coordinates={origin}
+              onCoordinatesChange={(coordinates) => {
+                setOrigin(coordinates);
+                setLocationStatus("idle");
+                setError(null);
+              }}
+            />
+
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={useMyLocation}
+              disabled={locationStatus === "loading" || isSubmitting}
+              className="w-fit border-success text-success hover:bg-success/10 hover:text-success"
+            >
+              {locationStatus === "loading"
+                ? "Finding your location…"
+                : "Use my location"}
+            </Button>
+
+            {locationStatus === "selected" ? (
+              <p className="text-xs text-muted-foreground">
+                Current location selected as your starting point.
+              </p>
+            ) : null}
+          </FieldGroup>
+
           <PlaceInput
-            id="origin"
-            label="From"
-            placeholder="Enter your starting point"
+            id="destination"
+            label="To"
+            placeholder="Enter your destination"
+            coordinates={destination}
             onCoordinatesChange={(coordinates) => {
-              setOrigin(coordinates);
-              setLocationStatus("idle");
+              setDestination(coordinates);
+              setError(null);
             }}
           />
-          <button
-            type="button"
-            onClick={useMyLocation}
-            disabled={locationStatus === "loading"}
-            className="self-start text-sm font-medium text-primary underline-offset-4 hover:underline disabled:cursor-wait disabled:opacity-60"
-          >
-            {locationStatus === "loading" ? "Finding your location…" : "Use my location"}
-          </button>
-          {locationStatus === "selected" ? (
-            <p className="text-xs text-muted-foreground">Current location selected as your starting point.</p>
-          ) : null}
         </div>
-        <PlaceInput
-          id="destination"
-          label="To"
-          placeholder="Enter your destination"
-          onCoordinatesChange={setDestination}
-        />
-      </div>
-      {error ? <p role="alert" className="text-sm text-destructive">{error}</p> : null}
-      <button
-        type="submit"
-        className="h-11 rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-      >
-        Find safer route
-      </button>
+
+        <Field data-invalid={Boolean(error && !origin && !destination)}>
+          <FieldLabel htmlFor="travel-mode">Travel mode</FieldLabel>
+          <Select
+            value={travelMode}
+            onValueChange={(value) => setTravelMode(value as TravelMode)}
+          >
+            <SelectTrigger
+              id="travel-mode"
+              className="w-full"
+              aria-invalid={Boolean(error && !origin && !destination)}
+            >
+              <SelectValue placeholder="Choose travel mode" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="DRIVE">Driving</SelectItem>
+              <SelectItem value="TWO_WHEELER">Two-wheeler</SelectItem>
+            </SelectContent>
+          </Select>
+          <FieldDescription>
+            Departure time uses the moment you submit the route.
+          </FieldDescription>
+        </Field>
+
+        {error ? <FieldError>{error}</FieldError> : null}
+      </FieldGroup>
+
+      <Button type="submit" size="lg" disabled={isSubmitting}>
+        {isSubmitting ? "Analyzing routes..." : "Find safer route →"}
+      </Button>
     </form>
   );
 }
@@ -188,4 +299,4 @@ export function RouteForm({ onSubmit }: RouteFormProps) {
 }
 
 export default RouteForm;
-export type { Coordinates, RouteFormValues };
+export type { Coordinates, RouteFormValues, TravelMode };
