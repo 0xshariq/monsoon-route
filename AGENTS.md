@@ -1274,14 +1274,14 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 35
+CURRENT STAGE: 36
 CURRENT STATUS: IN PROGRESS
 CURRENT DAY: IMPLEMENTATION
 BLOCKER: None.
 
-Last completed: Stage 34 — Risk Breakdown
-Validation: Added a reusable RouteAnalysis card with numeric, accessible progress indicators for environmental, waterlogging, rain, and time penalty scores plus evidence.
-Next: Stage 35 — UI States
+Last completed: Stage 35 — UI States
+Validation: Added explicit idle, loading, success, request-error, AI loading, AI fallback, and AI error UI states with accessible live regions and clear empty-state copy.
+Next: Stage 36 — Deterministic Explanation
 ```
 
 ### How to use this
@@ -1541,7 +1541,7 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 35 — UI States
 
-- [ ] Stage 35 — UI States
+- [x] Stage 35 — UI States
 
 ---
 

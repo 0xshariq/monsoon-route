@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,6 +12,7 @@ import {
 } from "@/components/ui/card";
 import RouteForm from "@/components/route-form";
 import RouteMap from "@/components/route-map";
+import WhyRoute, { type AiState } from "@/components/why-route";
 import type { Recommendation, RouteAnalysis } from "@/types/route";
 
 type RecommendationSectionProps = {
@@ -94,7 +98,42 @@ function RecommendationSection({
   );
 }
 
+type RequestState = "idle" | "loading" | "success" | "error";
+
+function RequestStateMessage({ state }: { state: RequestState }) {
+  if (state === "idle") {
+    return <p className="text-sm text-muted-foreground">Enter two locations to compare routes.</p>;
+  }
+  if (state === "loading") {
+    return <p className="rounded-lg border border-primary/30 bg-primary/5 p-3 text-sm text-foreground" role="status">Analyzing routes, forecast rain, and waterlogging evidence…</p>;
+  }
+  if (state === "error") {
+    return <p className="rounded-lg border border-destructive/40 bg-destructive/5 p-3 text-sm text-destructive" role="alert">We could not analyze this route. Check the locations and try again.</p>;
+  }
+  return <p className="rounded-lg border border-success/40 bg-success/5 p-3 text-sm text-foreground" role="status">Route analysis complete.</p>;
+}
+
 export default function MonsoonRouteHome() {
+  const [requestState, setRequestState] = useState<RequestState>("idle");
+  const [aiState, setAiState] = useState<AiState>("idle");
+
+  async function analyzeRoute() {
+    setRequestState("loading");
+    setAiState("idle");
+    try {
+      const response = await fetch("/api/analyze-route", { method: "POST", headers: { "content-type": "application/json" }, body: "{}" });
+      if (!response.ok) throw new Error("Route analysis request failed");
+      setRequestState("success");
+    } catch {
+      setRequestState("error");
+    }
+  }
+
+  function explainRoute() {
+    setAiState("loading");
+    window.setTimeout(() => setAiState("fallback"), 500);
+  }
+
   return (
     <main className="flex-1 bg-background px-4 py-10 sm:px-6 lg:px-8">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-8">
@@ -111,7 +150,8 @@ export default function MonsoonRouteHome() {
           </p>
         </header>
 
-        <RouteForm />
+        <RouteForm onSubmit={analyzeRoute} />
+        <RequestStateMessage state={requestState} />
 
         <RecommendationSection
           recommendation={{
@@ -126,6 +166,16 @@ export default function MonsoonRouteHome() {
             },
           }}
           routes={[]}
+        />
+
+        <WhyRoute
+          state={aiState}
+          explanation={
+            aiState === "fallback"
+              ? "The deterministic route decision remains available while an AI explanation is unavailable."
+              : undefined
+          }
+          onExplain={explainRoute}
         />
 
         <RouteMap origin={{ lat: 0, lon: 0 }} destination={{ lat: 0, lon: 0 }} routes={[]} recommendedRouteId="" hotspots={[]} />
