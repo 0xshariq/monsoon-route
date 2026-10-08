@@ -2,6 +2,7 @@ import { Agent } from "@strands-agents/sdk";
 import { VercelModel } from "@strands-agents/sdk/models/vercel";
 import { createOllama } from "ai-sdk-ollama";
 import { z } from "zod";
+import type { RouteExplanation } from "@/types/route";
 
 export type ExplanationInput = Record<string, unknown>;
 
@@ -35,14 +36,15 @@ export function createExplanationAgent(): Agent {
 
 export async function explainRouteWithStrands(
   context: ExplanationInput,
-): Promise<string> {
+): Promise<RouteExplanation> {
   const agent = createExplanationAgent();
   const result = await agent.invoke(JSON.stringify(context));
-  return (
+  const explanation =
     result.lastMessage?.content
       ?.map((block) => (block as unknown as { text?: string }).text)
       .filter((text): text is string => Boolean(text))
       .join(" ")
-      .trim() ?? ""
-  );
+      .trim() ?? "";
+
+  return { explanation } satisfies RouteExplanation;
 }

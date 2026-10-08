@@ -85,6 +85,10 @@ export type ExplanationRouteSummary = {
   evidence?: AnalysisEvidence[];
 };
 
+export type RouteExplanation = {
+  explanation: string;
+};
+
 export type ExplanationContext = {
   recommendation: Recommendation;
   recommendedRoute: ExplanationRouteSummary & {
