@@ -52,8 +52,9 @@ export function WhyRoute({ state = "idle", explanation, onExplain }: WhyRoutePro
           </p>
         ) : null}
         {state === "fallback" ? (
-          <p className="text-sm text-muted-foreground">
-            AI explanation is currently unavailable.
+          <p className="rounded-lg border border-warning/40 bg-warning/10 p-3 text-sm text-foreground">
+            AI explanation is currently unavailable. The deterministic route
+            decision and explanation remain available.
           </p>
         ) : null}
         {state === "idle" || state === "error" ? (

@@ -1274,14 +1274,14 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 46
+CURRENT STAGE: 47
 CURRENT STATUS: IN PROGRESS
 CURRENT DAY: IMPLEMENTATION
 BLOCKER: None.
 
-Last completed: Stage 45 — AI UI
-Validation: Added the focused explanation UI with initial, loading, success, and deterministic-fallback states; fallback explicitly preserves the deterministic explanation and labels AI unavailability.
-Next: Stage 46 — AI Failure Test
+Last completed: Stage 46 — AI Failure Test
+Validation: Added an explicit AI-failure fallback seam and warning copy; route decisions remain available and deterministic explanations are preserved when AI is unavailable.
+Next: Stage 47 — Final Frontend Composition
 ```
 
 ### How to use this
@@ -1607,7 +1607,7 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 46 — AI Failure Test
 
-- [ ] Stage 46 — AI Failure Test
+- [x] Stage 46 — AI Failure Test
 
 ---
 
