@@ -1577,7 +1577,7 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 41 — Ollama
 
-- [ ] Stage 41 — Ollama
+- [x] Stage 41 — Ollama
 
 ---
 
