@@ -1274,7 +1274,7 @@ This is the most important section for continuing work across coding-agent sessi
 ## Current implementation cursor
 
 ```text
-CURRENT STAGE: 7
+CURRENT STAGE: 8
   CURRENT STATUS: NOT STARTED
   CURRENT DAY: IMPLEMENTATION
   BLOCKER: None.
@@ -1341,7 +1341,7 @@ Do not invent a solution merely to keep progress green.
 
 - [X] Stage 2 — Design Tokens
   
-**Current cursor:** Stage 6
+**Current cursor:** Stage 7
 
 ---
 
@@ -1371,7 +1371,7 @@ Do not invent a solution merely to keep progress green.
 
 ## Stage 7 — Route Contracts
 
-- [ ] Stage 7 — Route Contracts
+- [X] Stage 7 — Route Contracts
 
 ---
 
@@ -2009,7 +2009,7 @@ READ THE PLAN
 FIND CURRENT STAGE
     ↓
 IMPLEMENT IT
-    ���
+    �����
 TEST IT
     ↓
 MARK IT COMPLETE
