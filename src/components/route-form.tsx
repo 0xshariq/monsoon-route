@@ -102,6 +102,7 @@ function PlaceInput({
         return;
       }
 
+      onValueChange(place.formatted_address ?? place.name ?? inputRef.current?.value ?? "");
       onCoordinatesChange({
         lat: location.lat(),
         lon: location.lng(),
@@ -160,6 +161,7 @@ function RouteFormFields({ onSubmit }: RouteFormProps) {
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
         setOrigin({ lat: coords.latitude, lon: coords.longitude });
+        setOriginLabel("Current location");
         setLocationStatus("selected");
       },
       (geolocationError) => {
@@ -178,7 +180,7 @@ function RouteFormFields({ onSubmit }: RouteFormProps) {
     );
   }, []);
 
-  const presets = [{ label: "Mumbai → Pune", from: "Mumbai, Maharashtra", to: "Pune, Maharashtra", origin: { lat: 19.076, lon: 72.8777 }, destination: { lat: 18.5204, lon: 73.8567 } }, { label: "Pune → Nashik", from: "Pune, Maharashtra", to: "Nashik, Maharashtra", origin: { lat: 18.5204, lon: 73.8567 }, destination: { lat: 19.9975, lon: 73.7898 } }, { label: "Mumbai → Goa", from: "Mumbai, Maharashtra", to: "Panaji, Goa", origin: { lat: 19.076, lon: 72.8777 }, destination: { lat: 15.4909, lon: 73.8278 } }];
+  const presets = [{ label: "Mumbai → Thane", from: "Mumbai, Maharashtra", to: "Thane, Maharashtra", origin: { lat: 19.076, lon: 72.8777 }, destination: { lat: 19.2183, lon: 72.9781 } }, { label: "Thane → Navi Mumbai", from: "Thane, Maharashtra", to: "Navi Mumbai, Maharashtra", origin: { lat: 19.2183, lon: 72.9781 }, destination: { lat: 19.033, lon: 73.0297 } }, { label: "Mumbai → Navi Mumbai", from: "Mumbai, Maharashtra", to: "Navi Mumbai, Maharashtra", origin: { lat: 19.076, lon: 72.8777 }, destination: { lat: 19.033, lon: 73.0297 } }];
   const selectPreset = (preset: (typeof presets)[number]) => { setOrigin(preset.origin); setDestination(preset.destination); setOriginLabel(preset.from); setDestinationLabel(preset.to); setError(null); };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
