@@ -11,7 +11,11 @@ export async function GET() {
   url.searchParams.set("forecast_days", "2");
   url.searchParams.set("timezone", "Asia/Kolkata");
 
-  const response = await fetch(url, { next: { revalidate: 1800 } });
-  if (!response.ok) return NextResponse.json({ error: "Weather provider unavailable" }, { status: 502 });
-  return NextResponse.json(await response.json());
+  try {
+    const response = await fetch(url, { next: { revalidate: 1800 } });
+    if (!response.ok) return NextResponse.json({ error: "Weather provider unavailable" }, { status: 502 });
+    return NextResponse.json(await response.json());
+  } catch {
+    return NextResponse.json({ error: "Weather provider unavailable" }, { status: 502 });
+  }
 }
