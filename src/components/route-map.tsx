@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 
 import {
-  APIProvider,
   AdvancedMarker,
   Map,
   Pin,
@@ -180,8 +179,6 @@ export function RouteMap({
   recommendedRouteId,
   hotspots,
 }: RouteMapProps) {
-  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
-
   return (
     <section aria-labelledby="map-heading" className="flex flex-col gap-3">
       <div>
@@ -194,8 +191,7 @@ export function RouteMap({
       </div>
 
       <div className="relative min-h-72 overflow-hidden rounded-xl border border-border bg-card shadow-sm sm:min-h-90">
-        <APIProvider apiKey={apiKey}>
-          <Map
+        <Map
             defaultCenter={MUMBAI_CENTER}
             defaultZoom={11}
             mapId="DEMO_MAP_ID"
@@ -247,8 +243,7 @@ export function RouteMap({
             {hotspots.map((hotspot) => (
               <HotspotMarker key={hotspot.id} hotspot={hotspot} />
             ))}
-          </Map>
-        </APIProvider>
+        </Map>
 
         <div
           aria-label="Map legend"

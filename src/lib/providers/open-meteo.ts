@@ -1,4 +1,5 @@
 import type { Coordinates, Route } from "@/types/route";
+import { fetchWithTimeout } from "@/lib/providers/request-timeout";
 import { getRouteMidpoints } from "@/lib/geo/route-geometry";
 
 const OPEN_METEO_URL = "https://api.open-meteo.com/v1/forecast";
@@ -110,7 +111,7 @@ export async function getOpenMeteoForecast(routes: Route[]): Promise<WeatherSnap
     return [];
   }
 
-  const response = await fetch(buildUrl(routes), { method: "GET" });
+  const response = await fetchWithTimeout(buildUrl(routes), { method: "GET" });
   if (!response.ok) {
     const detail = await response.text();
     throw new Error(

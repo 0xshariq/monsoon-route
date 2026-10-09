@@ -37,7 +37,12 @@ const explanationContextSchema = z.object({
 export async function POST(request: Request) {
   try {
     const context = explanationContextSchema.parse(await request.json());
-    const result = await explainRouteWithStrands(context);
+    const result = await Promise.race([
+      explainRouteWithStrands(context),
+      new Promise<never>((_, reject) =>
+        setTimeout(() => reject(new Error("Explanation timed out.")), 15000),
+      ),
+    ]);
     const explanation = result.explanation.trim();
 
     if (!explanation) {

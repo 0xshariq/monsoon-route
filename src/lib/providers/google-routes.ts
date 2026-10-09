@@ -1,4 +1,5 @@
 import type { Route, RouteRequest } from "@/types/route";
+import { fetchWithTimeout } from "@/lib/providers/request-timeout";
 
 const GOOGLE_ROUTES_URL =
   "https://routes.googleapis.com/directions/v2:computeRoutes";
@@ -102,7 +103,7 @@ export async function getGoogleRoutes(request: RouteRequest): Promise<Route[]> {
     throw new Error("GOOGLE_ROUTES_API_KEY is not configured.");
   }
 
-  const response = await fetch(GOOGLE_ROUTES_URL, {
+  const response = await fetchWithTimeout(GOOGLE_ROUTES_URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

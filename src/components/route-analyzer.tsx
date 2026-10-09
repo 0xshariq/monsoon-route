@@ -2,6 +2,7 @@
 
 import { useCallback, useState } from "react";
 import { AlertCircle, Loader2 } from "lucide-react";
+import { APIProvider } from "@vis.gl/react-google-maps";
 import { RouteForm, type RouteFormValues } from "@/components/route-form";
 import { RouteMap } from "@/components/route-map";
 import { RouteCard } from "@/components/route-card";
@@ -89,8 +90,11 @@ export function RouteAnalyzer() {
 
   const fastestTime = result ? Math.min(...result.routes.map((route) => route.route.durationSeconds)) : 0;
 
+  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
+
   return (
-    <div className="flex flex-col gap-6">
+    <APIProvider apiKey={apiKey} libraries={["places", "marker"]}>
+      <div className="flex flex-col gap-6">
       <RouteForm onSubmit={analyze} />
       {isAnalyzing ? (
         <div className="flex items-center gap-2 rounded-xl border border-border bg-card p-4 text-sm text-muted-foreground" role="status">
@@ -111,7 +115,8 @@ export function RouteAnalyzer() {
           <WhyRoute state={aiState} explanation={explanation} onExplain={explain} />
         </div>
       ) : null}
-    </div>
+      </div>
+    </APIProvider>
   );
 }
 
