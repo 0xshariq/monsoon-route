@@ -57,6 +57,8 @@ function PlaceInput({
   placeholder,
   coordinates,
   onCoordinatesChange,
+  value,
+  onValueChange,
   error,
 }: {
   id: string;
@@ -64,6 +66,8 @@ function PlaceInput({
   placeholder: string;
   coordinates: Coordinates | null;
   onCoordinatesChange: (coordinates: Coordinates | null) => void;
+  value: string;
+  onValueChange: (value: string) => void;
   error?: string;
 }) {
   const places = useMapsLibrary("places");
@@ -120,11 +124,11 @@ function PlaceInput({
         type="text"
         autoComplete="off"
         placeholder={placeholder}
+        value={value}
         aria-invalid={Boolean(error)}
-        onChange={() => {
-          if (coordinatesRef.current) {
-            onCoordinatesChange(null);
-          }
+        onChange={(event) => {
+          onValueChange(event.target.value);
+          if (coordinatesRef.current) onCoordinatesChange(null);
         }}
       />
       {error ? <FieldError>{error}</FieldError> : null}
@@ -135,6 +139,8 @@ function PlaceInput({
 function RouteFormFields({ onSubmit }: RouteFormProps) {
   const [origin, setOrigin] = useState<Coordinates | null>(null);
   const [destination, setDestination] = useState<Coordinates | null>(null);
+  const [originLabel, setOriginLabel] = useState("");
+  const [destinationLabel, setDestinationLabel] = useState("");
   const [travelMode, setTravelMode] = useState<TravelMode>("DRIVE");
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -171,6 +177,9 @@ function RouteFormFields({ onSubmit }: RouteFormProps) {
       },
     );
   }, []);
+
+  const presets = [{ label: "Mumbai → Pune", from: "Mumbai, Maharashtra", to: "Pune, Maharashtra", origin: { lat: 19.076, lon: 72.8777 }, destination: { lat: 18.5204, lon: 73.8567 } }, { label: "Pune → Nashik", from: "Pune, Maharashtra", to: "Nashik, Maharashtra", origin: { lat: 18.5204, lon: 73.8567 }, destination: { lat: 19.9975, lon: 73.7898 } }, { label: "Mumbai → Goa", from: "Mumbai, Maharashtra", to: "Panaji, Goa", origin: { lat: 19.076, lon: 72.8777 }, destination: { lat: 15.4909, lon: 73.8278 } }];
+  const selectPreset = (preset: (typeof presets)[number]) => { setOrigin(preset.origin); setDestination(preset.destination); setOriginLabel(preset.from); setDestinationLabel(preset.to); setError(null); };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -215,7 +224,9 @@ function RouteFormFields({ onSubmit }: RouteFormProps) {
               id="origin"
               label="From"
               placeholder="Enter your starting point"
+              value={originLabel}
               coordinates={origin}
+              onValueChange={setOriginLabel}
               onCoordinatesChange={(coordinates) => {
                 setOrigin(coordinates);
                 setLocationStatus("idle");
@@ -247,7 +258,9 @@ function RouteFormFields({ onSubmit }: RouteFormProps) {
             id="destination"
             label="To"
             placeholder="Enter your destination"
+            value={destinationLabel}
             coordinates={destination}
+            onValueChange={setDestinationLabel}
             onCoordinatesChange={(coordinates) => {
               setDestination(coordinates);
               setError(null);
@@ -281,6 +294,7 @@ function RouteFormFields({ onSubmit }: RouteFormProps) {
         {error ? <FieldError>{error}</FieldError> : null}
       </FieldGroup>
 
+      <div className="flex flex-col gap-2"><p className="text-xs font-medium uppercase tracking-[.16em] text-muted-foreground">Popular routes</p><div className="flex flex-wrap gap-2">{presets.map((preset) => <Button key={preset.label} type="button" variant="outline" size="sm" onClick={() => selectPreset(preset)}>{preset.label}</Button>)}</div></div>
       <Button type="submit" size="lg" disabled={isSubmitting}>
         {isSubmitting ? "Analyzing routes..." : "Find safer route →"}
       </Button>
