@@ -1,8 +1,6 @@
-import { Agent } from "@strands-agents/sdk";
-import { VercelModel } from "@strands-agents/sdk/models/vercel";
-import { createOllama } from "ai-sdk-ollama";
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { explainRouteWithStrands } from "@/lib/providers/strands";
 import type { ExplanationContext } from "@/types/route";
 
 export const runtime = "nodejs";
@@ -36,44 +34,59 @@ const explanationContextSchema = z.object({
   fastestRoute: routeSummarySchema,
 }) satisfies z.ZodType<ExplanationContext>;
 
-function createExplanationAgent(): Agent {
-  return new Agent({
-    model: new VercelModel({
-      provider: createOllama({
-        baseURL: process.env.OLLAMA_BASE_URL ?? "http://localhost:11434/api",
-      })("llama3.2") as never,
-    }),
-    systemPrompt:
-      "Explain the deterministic MonsoonRoute recommendation clearly and briefly. " +
-      "Do not recalculate or change the recommendation. Return only plain text.",
-    printer: false,
-  });
+function deterministicFallback(context: ExplanationContext): string {
+  const recommended = context.recommendedRoute;
+  const fastest = context.fastestRoute;
+  const timeDifference = Math.round(recommended.durationMinutes - fastest.durationMinutes);
+  const reason = recommended.environmentalRiskScore < fastest.environmentalRiskScore
+    ? "lower environmental risk"
+    : "the lowest available decision score";
+  return timeDifference > 0
+    ? `The recommended route prioritizes ${reason} and is about ${timeDifference} minutes slower than the fastest route.`
+    : `The recommended route is selected for ${reason}.`;
 }
 
 export async function POST(request: Request) {
+  let parsedContext: ExplanationContext | null = null;
+
   try {
-    const context = explanationContextSchema.parse(await request.json());
-    const result = await createExplanationAgent().invoke(JSON.stringify(context));
-    const explanation = result.lastMessage?.content
-      .map((block) => (block as unknown as { text?: string }).text)
-      .filter((text): text is string => Boolean(text))
-      .join(" ")
-      .trim();
+    parsedContext = explanationContextSchema.parse(await request.json());
+    const context = parsedContext;
+    const controller = new AbortController();
+    let timeout: ReturnType<typeof setTimeout> | undefined;
+    try {
+      const result = await Promise.race([
+        explainRouteWithStrands(context, controller.signal),
+        new Promise<never>((_, reject) => {
+          timeout = setTimeout(() => {
+            controller.abort();
+            reject(new Error("Explanation timed out."));
+          }, 15000);
+        }),
+      ]);
+      const explanation = result.explanation.trim();
 
-    if (!explanation) {
-      return NextResponse.json(
-        { error: "The explanation service returned no explanation." },
-        { status: 502 },
-      );
+      if (!explanation) {
+        return NextResponse.json({ explanation: deterministicFallback(context), state: "fallback" });
+      }
+
+      return NextResponse.json({ explanation });
+    } finally {
+      if (timeout) clearTimeout(timeout);
     }
-
-    return NextResponse.json({ explanation });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { error: "Invalid explanation context." },
         { status: 400 },
       );
+    }
+
+    if (parsedContext) {
+      return NextResponse.json({
+        explanation: deterministicFallback(parsedContext),
+        state: "fallback",
+      });
     }
 
     return NextResponse.json(

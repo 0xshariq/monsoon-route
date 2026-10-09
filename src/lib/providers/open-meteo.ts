@@ -1,4 +1,5 @@
 import type { Coordinates, Route } from "@/types/route";
+import { fetchWithTimeout, releaseFetchTimeout } from "@/lib/providers/request-timeout";
 import { getRouteMidpoints } from "@/lib/geo/route-geometry";
 
 const OPEN_METEO_URL = "https://api.open-meteo.com/v1/forecast";
@@ -40,6 +41,20 @@ function asFiniteNumber(value: unknown, field: string): number {
   return value;
 }
 
+function asNonNegativeNumber(value: unknown, field: string): number {
+  const number = asFiniteNumber(value, field);
+  if (number < 0) throw new Error(`Open-Meteo returned an invalid ${field}.`);
+  return number;
+}
+
+function asProbability(value: unknown): number {
+  const probability = asFiniteNumber(value, "precipitation probability");
+  if (probability < 0 || probability > 100) {
+    throw new Error("Open-Meteo returned an invalid precipitation probability.");
+  }
+  return probability;
+}
+
 function asStringArray(value: unknown, field: string): string[] {
   if (!Array.isArray(value) || !value.every((item) => typeof item === "string")) {
     throw new Error(`Open-Meteo returned an invalid ${field}.`);
@@ -60,12 +75,15 @@ function normalizeLocations(payload: OpenMeteoResponse): OpenMeteoLocationRespon
 
 function toIntervals(hourly: NonNullable<OpenMeteoLocationResponse["hourly"]>): WeatherInterval[] {
   const times = asStringArray(hourly.time, "hourly time");
-  const precipitation = asNumberArray(hourly.precipitation, "precipitation");
+  const precipitation = asNumberArray(hourly.precipitation, "precipitation").map((value) => asNonNegativeNumber(value, "precipitation"));
   const probability = asNumberArray(
     hourly.precipitation_probability,
     "precipitation probability",
-  );
-  const weatherCode = asNumberArray(hourly.weather_code, "weather code");
+  ).map(asProbability);
+  const weatherCode = asNumberArray(hourly.weather_code, "weather code").map((value) => {
+    if (!Number.isInteger(value) || value < 0) throw new Error("Open-Meteo returned an invalid weather code.");
+    return value;
+  });
 
   if (
     times.length !== precipitation.length ||
@@ -110,31 +128,35 @@ export async function getOpenMeteoForecast(routes: Route[]): Promise<WeatherSnap
     return [];
   }
 
-  const response = await fetch(buildUrl(routes), { method: "GET" });
-  if (!response.ok) {
-    const detail = await response.text();
-    throw new Error(
-      `Open-Meteo request failed with status ${response.status}: ${detail.slice(0, 300)}`,
-    );
-  }
+  const response = await fetchWithTimeout(buildUrl(routes), { method: "GET" }, 10000);
+  try {
+    if (!response.ok) {
+      const detail = await response.text();
+      throw new Error(
+        `Open-Meteo request failed with status ${response.status}: ${detail.slice(0, 300)}`,
+      );
+    }
 
-  const payload = (await response.json()) as OpenMeteoResponse;
+    const payload = (await response.json()) as OpenMeteoResponse;
   const locations = normalizeLocations(payload);
   if (locations.length !== routes.length) {
     throw new Error("Open-Meteo returned a different number of locations than requested.");
   }
 
-  return routes.map((route, index) => {
-    const location = locations[index];
-    const latitude = asFiniteNumber(location.latitude, "latitude");
-    const longitude = asFiniteNumber(location.longitude, "longitude");
+    return routes.map((route, index) => {
+      const location = locations[index];
+      const latitude = asFiniteNumber(location.latitude, "latitude");
+      const longitude = asFiniteNumber(location.longitude, "longitude");
 
-    return {
-      routeId: route.id,
-      location: { lat: latitude, lon: longitude },
-      hourly: toIntervals(location.hourly ?? {}),
-    };
-  });
+      return {
+        routeId: route.id,
+        location: { lat: latitude, lon: longitude },
+        hourly: toIntervals(location.hourly ?? {}),
+      };
+    });
+  } finally {
+    releaseFetchTimeout(response);
+  }
 }
 
 export const fetchOpenMeteoForecast = getOpenMeteoForecast;

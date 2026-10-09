@@ -37,7 +37,7 @@ import type { WeatherSnapshot } from "@/lib/providers/open-meteo";
 
 export const runtime = "nodejs";
 
-import hotspotDataset from "@/data/mumbai-region-waterlogging-hotspots.geojson";
+import hotspotDataset from "@/data/mumbai-region-waterlogging-hotspots";
 
 type HotspotFeature = {
   type: "Feature";
@@ -63,7 +63,7 @@ type AnalyzeRouteResponse = {
   hotspots: WaterloggingHotspot[];
 };
 
-const dataset = hotspotDataset as HotspotFeatureCollection;
+const dataset = hotspotDataset as unknown as HotspotFeatureCollection;
 
 function toHotspot(feature: HotspotFeature): WaterloggingHotspot {
   const representativeLocation =

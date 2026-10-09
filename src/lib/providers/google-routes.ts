@@ -1,4 +1,5 @@
 import type { Route, RouteRequest } from "@/types/route";
+import { fetchWithTimeout, releaseFetchTimeout } from "@/lib/providers/request-timeout";
 
 const GOOGLE_ROUTES_URL =
   "https://routes.googleapis.com/directions/v2:computeRoutes";
@@ -102,7 +103,7 @@ export async function getGoogleRoutes(request: RouteRequest): Promise<Route[]> {
     throw new Error("GOOGLE_ROUTES_API_KEY is not configured.");
   }
 
-  const response = await fetch(GOOGLE_ROUTES_URL, {
+  const response = await fetchWithTimeout(GOOGLE_ROUTES_URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -110,36 +111,38 @@ export async function getGoogleRoutes(request: RouteRequest): Promise<Route[]> {
       "X-Goog-FieldMask": GOOGLE_ROUTES_FIELD_MASK,
     },
     body: JSON.stringify(buildRequestBody(request)),
-  });
+  }, 12000);
 
-  if (!response.ok) {
-    const detail = await response.text();
-    throw new Error(
-      `Google Routes request failed with status ${response.status}: ${detail.slice(0, 300)}`,
-    );
-  }
+  try {
+    if (!response.ok) {
+      const detail = await response.text();
+      throw new Error(
+        `Google Routes request failed with status ${response.status}: ${detail.slice(0, 300)}`,
+      );
+    }
 
-  const payload = (await response.json()) as GoogleRouteResponse;
+    const payload = (await response.json()) as GoogleRouteResponse;
   if (!Array.isArray(payload.routes) || payload.routes.length === 0) {
     throw new Error("Google Routes returned no candidate routes.");
   }
 
-  return payload.routes.map((googleRoute, index) => ({
-    id: `route-${index}`,
-    label: index === 0 ? "default" : "alternative",
-    durationSeconds: parseDuration(googleRoute.duration),
-    distanceMeters:
-      typeof googleRoute.distanceMeters === "number" &&
-      Number.isFinite(googleRoute.distanceMeters) &&
-      googleRoute.distanceMeters >= 0
-        ? googleRoute.distanceMeters
-        : (() => {
-            throw new Error("Google Routes returned an invalid route distance.");
-          })(),
-    geometry: normalizeGeometry(
-      googleRoute.polyline?.geoJsonLinestring,
-    ),
-  }));
+    return payload.routes.map((googleRoute, index) => ({
+      id: `route-${index}`,
+      label: index === 0 ? "default" : "alternative",
+      durationSeconds: parseDuration(googleRoute.duration),
+      distanceMeters:
+        typeof googleRoute.distanceMeters === "number" &&
+        Number.isFinite(googleRoute.distanceMeters) &&
+        googleRoute.distanceMeters >= 0
+          ? googleRoute.distanceMeters
+          : (() => {
+              throw new Error("Google Routes returned an invalid route distance.");
+            })(),
+      geometry: normalizeGeometry(googleRoute.polyline?.geoJsonLinestring),
+    }));
+  } finally {
+    releaseFetchTimeout(response);
+  }
 }
 
 export const fetchGoogleRoutes = getGoogleRoutes;

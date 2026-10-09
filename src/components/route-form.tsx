@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { APIProvider, useMapsLibrary } from "@vis.gl/react-google-maps";
+import { useMapsLibrary } from "@vis.gl/react-google-maps";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -289,13 +289,7 @@ function RouteFormFields({ onSubmit }: RouteFormProps) {
 }
 
 export function RouteForm({ onSubmit }: RouteFormProps) {
-  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
-
-  return (
-    <APIProvider apiKey={apiKey} libraries={["places"]}>
-      <RouteFormFields onSubmit={onSubmit} />
-    </APIProvider>
-  );
+  return <RouteFormFields onSubmit={onSubmit} />;
 }
 
 export default RouteForm;

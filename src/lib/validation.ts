@@ -1,14 +1,30 @@
 import { z } from "zod";
 
+export const MUMBAI_OPERATING_BOUNDS = {
+  north: 19.35,
+  south: 18.85,
+  east: 73.15,
+  west: 72.65,
+} as const;
+
 const coordinatesSchema = z.object({
-  lat: z.number().min(-90).max(90),
-  lon: z.number().min(-180).max(180),
+  lat: z.number().finite().min(-90).max(90),
+  lon: z.number().finite().min(-180).max(180),
 });
+
+const supportedRegionCoordinates = coordinatesSchema.refine(
+  ({ lat, lon }) =>
+    lat >= MUMBAI_OPERATING_BOUNDS.south &&
+    lat <= MUMBAI_OPERATING_BOUNDS.north &&
+    lon >= MUMBAI_OPERATING_BOUNDS.west &&
+    lon <= MUMBAI_OPERATING_BOUNDS.east,
+  "Location is outside MonsoonRoute's supported Mumbai urban region.",
+);
 
 export const routeRequestSchema = z
   .object({
-    origin: coordinatesSchema,
-    destination: coordinatesSchema,
+    origin: supportedRegionCoordinates,
+    destination: supportedRegionCoordinates,
     travelMode: z.enum(["DRIVE", "TWO_WHEELER"]),
     departureTime: z.iso.datetime({ offset: true }),
   })

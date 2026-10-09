@@ -1,6 +1,16 @@
-"use client";
-import Link from "next/link";
-import { ArrowRight, LocateFixed } from "lucide-react";
-import { AppShell, MapMock, Panel, PageFrame } from "@/components/app-shell";
+import { AppShell, PageFrame } from "@/components/app-shell";
+import { RouteAnalyzer } from "@/components/route-analyzer";
 
-export default function HomePage() { return <AppShell><PageFrame eyebrow="Rain-aware routing" title="Travel safer during monsoon" description="Get real-time weather-aware routes, avoid high-risk areas, and make informed travel decisions with live data."><div className="grid gap-6 xl:grid-cols-[430px_1fr]"><Panel className="p-5"><div className="mb-5 flex items-center gap-2 text-sm font-medium"><span className="grid size-8 place-items-center rounded-lg bg-[#103b61]"><LocateFixed className="size-4 text-[#2ba8ff]" /></span>Plan a safer journey</div><div className="space-y-3"><label className="block rounded-xl border border-white/10 bg-[#071923] p-3"><span className="text-[11px] text-slate-500">From</span><input className="mt-1 w-full bg-transparent text-sm outline-none" defaultValue="Mumbai, Maharashtra" /></label><label className="block rounded-xl border border-white/10 bg-[#071923] p-3"><span className="text-[11px] text-slate-500">To</span><input className="mt-1 w-full bg-transparent text-sm outline-none" defaultValue="Pune, Maharashtra" /></label><select className="w-full rounded-xl border border-white/10 bg-[#071923] p-3 text-sm text-slate-300"><option>Driving</option><option>Walking</option><option>Cycling</option></select><Link href="/routes" className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#148cff] px-4 py-3 text-sm font-semibold text-white shadow-[0_0_25px_rgba(20,140,255,.25)]">Find safer route <ArrowRight className="size-4" /></Link></div><div className="mt-6 border-t border-white/10 pt-4"><p className="mb-3 text-xs text-slate-500">Popular routes</p><div className="flex flex-wrap gap-2">{['Mumbai → Pune','Pune → Nashik','Mumbai → Goa','Delhi → Jaipur'].map(x=><span key={x} className="rounded-full border border-white/10 px-3 py-1.5 text-xs text-slate-300">{x}</span>)}</div></div></Panel><MapMock /></div></PageFrame></AppShell>; }
+export default function HomePage() {
+  return (
+    <AppShell>
+      <PageFrame
+        eyebrow="Rain-aware routing"
+        title="Travel safer during monsoon"
+        description="Compare live route candidates using forecast rain, waterlogging evidence, and practical travel time."
+      >
+        <RouteAnalyzer />
+      </PageFrame>
+    </AppShell>
+  );
+}

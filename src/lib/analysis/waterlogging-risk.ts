@@ -15,11 +15,17 @@ const SEVERITY_WEIGHT: Record<HotspotSeverity, number> = {
 };
 
 function getProximityFactor(distanceMeters: number): number {
+  if (!Number.isFinite(distanceMeters) || distanceMeters < 0) {
+    throw new Error("Waterlogging distance must be finite and non-negative.");
+  }
   return Math.max(0, 1 - distanceMeters / HOTSPOT_CORRIDOR_METERS);
 }
 
 function getRecurrenceFactor(documentedEventCount: number): number {
-  const eventCount = Math.max(0, documentedEventCount);
+  if (!Number.isFinite(documentedEventCount) || documentedEventCount < 0 || !Number.isInteger(documentedEventCount)) {
+    throw new Error("Documented waterlogging events must be a finite non-negative integer.");
+  }
+  const eventCount = documentedEventCount;
 
   return Math.min(
     1,
@@ -36,6 +42,9 @@ export function calculateWaterloggingRisk(
       exposure.documentedEventCount,
     );
     const severityWeight = SEVERITY_WEIGHT[exposure.severity];
+    if (!Number.isFinite(severityWeight)) {
+      throw new Error("Waterlogging severity is invalid.");
+    }
 
     return sum + severityWeight * recurrenceFactor * proximityFactor;
   }, 0);
