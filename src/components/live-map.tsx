@@ -6,7 +6,7 @@ import { MapPin } from "lucide-react";
 const MUMBAI = { lat: 19.076, lng: 72.8777 };
 const PUNE = { lat: 18.5204, lng: 73.8567 };
 
-export function LiveMap({ compact = false }: { compact?: boolean }) {
+export function LiveMap({ compact = false, showLayers = true }: { compact?: boolean; showLayers?: boolean }) {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
 
   if (!apiKey) {
@@ -30,14 +30,13 @@ export function LiveMap({ compact = false }: { compact?: boolean }) {
           <AdvancedMarker position={MUMBAI} title="Mumbai">
             <MapPin className="fill-[#168cff] text-white drop-shadow-lg" />
           </AdvancedMarker>
-          {compact && <>
-            <AdvancedMarker position={PUNE} title="Pune">
-              <MapPin className="fill-[#42db8b] text-white drop-shadow-lg" />
-            </AdvancedMarker>
-            <Polyline path={[MUMBAI, PUNE]} options={{ strokeColor: "#269fff", strokeOpacity: 0.9, strokeWeight: 5 }} />
-          </>}
+          <AdvancedMarker position={PUNE} title="Pune">
+            <MapPin className="fill-[#42db8b] text-white drop-shadow-lg" />
+          </AdvancedMarker>
+          <Polyline path={[MUMBAI, PUNE]} options={{ strokeColor: "#269fff", strokeOpacity: 0.9, strokeWeight: 5 }} />
         </Map>
         <div className="pointer-events-none absolute bottom-3 left-3 rounded-lg bg-[#071923]/90 px-3 py-2 text-[11px] text-slate-300">Live Google Maps · Mumbai region</div>
+        {showLayers ? <div className="absolute right-3 top-3 rounded-xl border border-white/10 bg-[#071923]/95 p-3 text-xs shadow-xl"><p className="mb-2 font-semibold text-white">Map layers</p><div className="flex flex-col gap-1.5 text-slate-300"><span><i className="mr-2 inline-block size-2 rounded-full bg-[#269fff]" />Rain radar</span><span><i className="mr-2 inline-block size-2 rounded-full bg-[#ff5c74]" />Risk zones</span><span><i className="mr-2 inline-block size-2 rounded-full bg-[#42db8b]" />Route condition</span></div></div> : null}
       </div>
     </APIProvider>
   );

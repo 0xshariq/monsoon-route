@@ -107,12 +107,9 @@ export function RouteAnalyzer() {
 
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
 
-  if (!apiKey) {
-    return <div role="alert" className="rounded-xl border border-destructive/40 bg-destructive/10 p-4 text-sm text-destructive">Google Maps is not configured for this environment. Add NEXT_PUBLIC_GOOGLE_MAPS_API_KEY to enable location selection and route maps.</div>;
-  }
-
   return (
-    <APIProvider apiKey={apiKey} libraries={["places", "marker"]}>
+    <>
+      <APIProvider apiKey={apiKey} libraries={["places", "marker"]}>
       <div className="flex flex-col gap-6">
       <RouteForm onSubmit={analyze} />
       {isAnalyzing ? (
@@ -135,7 +132,8 @@ export function RouteAnalyzer() {
         </div>
       ) : null}
       </div>
-    </APIProvider>
+      </APIProvider>
+    </>
   );
 }
 
