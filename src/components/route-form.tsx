@@ -113,7 +113,7 @@ function PlaceInput({
       listener.remove();
       autocompleteRef.current = null;
     };
-  }, [onCoordinatesChange, places]);
+  }, [onCoordinatesChange, onValueChange, places]);
 
   return (
     <Field data-invalid={Boolean(error)}>
@@ -209,10 +209,10 @@ function RouteFormFields({ onSubmit }: RouteFormProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col gap-5 rounded-xl border border-border bg-card p-5 shadow-sm"
+      className="flex h-full flex-col gap-5 rounded-none border-0 bg-transparent p-0 shadow-none"
     >
       <div>
-        <h2 className="text-lg font-semibold text-foreground">Plan your route</h2>
+        <h2 className="text-2xl font-semibold text-foreground">Plan your route</h2>
         <p className="mt-1 text-sm text-muted-foreground">
           Choose locations from the suggestions so we can use their exact
           coordinates.
@@ -296,8 +296,8 @@ function RouteFormFields({ onSubmit }: RouteFormProps) {
         {error ? <FieldError>{error}</FieldError> : null}
       </FieldGroup>
 
-      <div className="flex flex-col gap-2"><p className="text-xs font-medium uppercase tracking-[.16em] text-muted-foreground">Popular routes</p><div className="flex flex-wrap gap-2">{presets.map((preset) => <Button key={preset.label} type="button" variant="outline" size="sm" onClick={() => selectPreset(preset)}>{preset.label}</Button>)}</div></div>
-      <Button type="submit" size="lg" disabled={isSubmitting}>
+      <div className="flex flex-col gap-2"><p className="text-xs font-medium uppercase tracking-[.16em] text-muted-foreground">Quick select</p><div className="flex flex-wrap gap-2">{presets.map((preset) => <Button key={preset.label} type="button" variant="outline" size="sm" onClick={() => selectPreset(preset)}>{preset.label}</Button>)}</div></div>
+      <Button type="submit" size="lg" className="mt-auto h-12 w-full text-base" disabled={isSubmitting}>
         {isSubmitting ? "Analyzing routes..." : "Find safer route →"}
       </Button>
     </form>

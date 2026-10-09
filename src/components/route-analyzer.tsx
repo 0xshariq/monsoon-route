@@ -109,7 +109,6 @@ export function RouteAnalyzer() {
 
   return (
     <>
-      {!apiKey ? <div role="status" className="mb-4 rounded-xl border border-amber-400/30 bg-amber-400/10 p-3 text-xs text-amber-200">Address search is unavailable in this preview. Use a popular route preset below, or enable Google Maps for address search.</div> : null}
       <APIProvider apiKey={apiKey} libraries={["places", "marker"]}>
       <div className="flex flex-col gap-6">
       <RouteForm onSubmit={analyze} />

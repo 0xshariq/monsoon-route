@@ -44,8 +44,8 @@ export function AppShell({ children }: { children: ReactNode }) {
   );
 }
 
-export function PageFrame({ eyebrow, title, description, children }: { eyebrow?: string; title: string; description?: string; children: ReactNode }) {
-  return <main className="mx-auto w-full max-w-[1400px] px-4 py-8 sm:px-6 lg:py-10"><div className="mb-7">{eyebrow && <p className="mb-2 text-xs font-semibold uppercase tracking-[.2em] text-[#27a7ff]">{eyebrow}</p>}<h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">{title}</h1>{description && <p className="mt-2 max-w-2xl text-sm text-slate-400">{description}</p>}</div>{children}</main>;
+export function PageFrame({ eyebrow, title, description, children, centered = false }: { eyebrow?: string; title: string; description?: string; children: ReactNode; centered?: boolean }) {
+  return <main className="mx-auto w-full max-w-[1400px] px-4 py-8 sm:px-6 lg:py-10"><div className={`mb-7 ${centered ? "text-center" : ""}`}>{eyebrow && <p className="mb-2 text-xs font-semibold uppercase tracking-[.2em] text-[#27a7ff]">{eyebrow}</p>}<h1 className="text-3xl font-semibold tracking-tight sm:text-4xl lg:text-[42px]">{title}</h1>{description && <p className={`mt-2 text-sm text-slate-400 ${centered ? "mx-auto max-w-3xl" : "max-w-2xl"}`}>{description}</p>}</div>{children}</main>;
 }
 
 export function Panel({ children, className = "" }: { children: ReactNode; className?: string }) { return <section className={`rounded-2xl border border-white/10 bg-[#0b202d] shadow-2xl shadow-black/10 ${className}`}>{children}</section>; }
