@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import { CloudRain, Map, Palette, Route, Save, UserRound } from "lucide-react";
 import { AppShell, Panel, PageFrame } from "@/components/app-shell";
 const sections=[[UserRound,'General'],[Map,'Map preferences'],[CloudRain,'Weather preferences'],[Route,'Route preferences'],[Palette,'Appearance']] as const;
