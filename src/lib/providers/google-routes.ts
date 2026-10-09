@@ -111,7 +111,7 @@ export async function getGoogleRoutes(request: RouteRequest): Promise<Route[]> {
       "X-Goog-FieldMask": GOOGLE_ROUTES_FIELD_MASK,
     },
     body: JSON.stringify(buildRequestBody(request)),
-  });
+  }, 12000);
 
   if (!response.ok) {
     const detail = await response.text();

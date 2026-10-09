@@ -34,9 +34,24 @@ const explanationContextSchema = z.object({
   fastestRoute: routeSummarySchema,
 }) satisfies z.ZodType<ExplanationContext>;
 
+function deterministicFallback(context: ExplanationContext): string {
+  const recommended = context.recommendedRoute;
+  const fastest = context.fastestRoute;
+  const timeDifference = Math.round(recommended.durationMinutes - fastest.durationMinutes);
+  const reason = recommended.environmentalRiskScore < fastest.environmentalRiskScore
+    ? "lower environmental risk"
+    : "the lowest available decision score";
+  return timeDifference > 0
+    ? `The recommended route prioritizes ${reason} and is about ${timeDifference} minutes slower than the fastest route.`
+    : `The recommended route is selected for ${reason}.`;
+}
+
 export async function POST(request: Request) {
+  let parsedContext: ExplanationContext | null = null;
+
   try {
-    const context = explanationContextSchema.parse(await request.json());
+    parsedContext = explanationContextSchema.parse(await request.json());
+    const context = parsedContext;
     const result = await Promise.race([
       explainRouteWithStrands(context),
       new Promise<never>((_, reject) =>
@@ -59,6 +74,13 @@ export async function POST(request: Request) {
         { error: "Invalid explanation context." },
         { status: 400 },
       );
+    }
+
+    if (parsedContext) {
+      return NextResponse.json({
+        explanation: deterministicFallback(parsedContext),
+        state: "fallback",
+      });
     }
 
     return NextResponse.json(

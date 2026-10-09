@@ -41,6 +41,20 @@ function asFiniteNumber(value: unknown, field: string): number {
   return value;
 }
 
+function asNonNegativeNumber(value: unknown, field: string): number {
+  const number = asFiniteNumber(value, field);
+  if (number < 0) throw new Error(`Open-Meteo returned an invalid ${field}.`);
+  return number;
+}
+
+function asProbability(value: unknown): number {
+  const probability = asFiniteNumber(value, "precipitation probability");
+  if (probability < 0 || probability > 100) {
+    throw new Error("Open-Meteo returned an invalid precipitation probability.");
+  }
+  return probability;
+}
+
 function asStringArray(value: unknown, field: string): string[] {
   if (!Array.isArray(value) || !value.every((item) => typeof item === "string")) {
     throw new Error(`Open-Meteo returned an invalid ${field}.`);
@@ -61,12 +75,15 @@ function normalizeLocations(payload: OpenMeteoResponse): OpenMeteoLocationRespon
 
 function toIntervals(hourly: NonNullable<OpenMeteoLocationResponse["hourly"]>): WeatherInterval[] {
   const times = asStringArray(hourly.time, "hourly time");
-  const precipitation = asNumberArray(hourly.precipitation, "precipitation");
+  const precipitation = asNumberArray(hourly.precipitation, "precipitation").map((value) => asNonNegativeNumber(value, "precipitation"));
   const probability = asNumberArray(
     hourly.precipitation_probability,
     "precipitation probability",
-  );
-  const weatherCode = asNumberArray(hourly.weather_code, "weather code");
+  ).map(asProbability);
+  const weatherCode = asNumberArray(hourly.weather_code, "weather code").map((value) => {
+    if (!Number.isInteger(value) || value < 0) throw new Error("Open-Meteo returned an invalid weather code.");
+    return value;
+  });
 
   if (
     times.length !== precipitation.length ||
@@ -111,7 +128,7 @@ export async function getOpenMeteoForecast(routes: Route[]): Promise<WeatherSnap
     return [];
   }
 
-  const response = await fetchWithTimeout(buildUrl(routes), { method: "GET" });
+  const response = await fetchWithTimeout(buildUrl(routes), { method: "GET" }, 10000);
   if (!response.ok) {
     const detail = await response.text();
     throw new Error(
