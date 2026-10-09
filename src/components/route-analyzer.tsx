@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { AlertCircle, Loader2 } from "lucide-react";
 import { APIProvider } from "@vis.gl/react-google-maps";
 import { RouteForm, type RouteFormValues } from "@/components/route-form";
@@ -46,8 +46,14 @@ export function RouteAnalyzer() {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [aiState, setAiState] = useState<AiState>("idle");
   const [explanation, setExplanation] = useState<string>();
+  const analysisRequest = useRef<AbortController | null>(null);
+  const explanationRequest = useRef<AbortController | null>(null);
 
   const analyze = useCallback(async (values: RouteFormValues) => {
+    analysisRequest.current?.abort();
+    explanationRequest.current?.abort();
+    const controller = new AbortController();
+    analysisRequest.current = controller;
     setIsAnalyzing(true);
     setError(null);
     setResult(null);
@@ -58,31 +64,40 @@ export function RouteAnalyzer() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
+        signal: controller.signal,
       });
       const payload = (await response.json()) as AnalyzeResponse & ErrorResponse;
       if (!response.ok || !payload.routes) throw new Error(payload.error?.message ?? "Route analysis failed.");
+      if (controller.signal.aborted) return;
       setResult({ ...payload, origin: values.origin, destination: values.destination });
     } catch (cause) {
+      if (controller.signal.aborted) return;
       setError(cause instanceof Error ? cause.message : "Route analysis failed. Please try again.");
     } finally {
-      setIsAnalyzing(false);
+      if (!controller.signal.aborted) setIsAnalyzing(false);
     }
   }, []);
 
   const explain = useCallback(async () => {
     if (!result) return;
+    explanationRequest.current?.abort();
+    const controller = new AbortController();
+    explanationRequest.current = controller;
     setAiState("loading");
     try {
       const response = await fetch("/api/explain-route", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(buildExplanationContext(result)),
+        signal: controller.signal,
       });
       const payload = (await response.json()) as { explanation?: string };
       if (!response.ok || !payload.explanation) throw new Error("Explanation unavailable");
+      if (controller.signal.aborted) return;
       setExplanation(payload.explanation);
       setAiState("success");
     } catch {
+      if (controller.signal.aborted) return;
       setExplanation(createDeterministicExplanation({ recommendation: result.recommendation, analyses: result.routes }));
       setAiState("fallback");
     }

@@ -1,5 +1,5 @@
 import type { Coordinates, Route } from "@/types/route";
-import { fetchWithTimeout } from "@/lib/providers/request-timeout";
+import { fetchWithTimeout, releaseFetchTimeout } from "@/lib/providers/request-timeout";
 import { getRouteMidpoints } from "@/lib/geo/route-geometry";
 
 const OPEN_METEO_URL = "https://api.open-meteo.com/v1/forecast";
@@ -129,30 +129,34 @@ export async function getOpenMeteoForecast(routes: Route[]): Promise<WeatherSnap
   }
 
   const response = await fetchWithTimeout(buildUrl(routes), { method: "GET" }, 10000);
-  if (!response.ok) {
-    const detail = await response.text();
-    throw new Error(
-      `Open-Meteo request failed with status ${response.status}: ${detail.slice(0, 300)}`,
-    );
-  }
+  try {
+    if (!response.ok) {
+      const detail = await response.text();
+      throw new Error(
+        `Open-Meteo request failed with status ${response.status}: ${detail.slice(0, 300)}`,
+      );
+    }
 
-  const payload = (await response.json()) as OpenMeteoResponse;
+    const payload = (await response.json()) as OpenMeteoResponse;
   const locations = normalizeLocations(payload);
   if (locations.length !== routes.length) {
     throw new Error("Open-Meteo returned a different number of locations than requested.");
   }
 
-  return routes.map((route, index) => {
-    const location = locations[index];
-    const latitude = asFiniteNumber(location.latitude, "latitude");
-    const longitude = asFiniteNumber(location.longitude, "longitude");
+    return routes.map((route, index) => {
+      const location = locations[index];
+      const latitude = asFiniteNumber(location.latitude, "latitude");
+      const longitude = asFiniteNumber(location.longitude, "longitude");
 
-    return {
-      routeId: route.id,
-      location: { lat: latitude, lon: longitude },
-      hourly: toIntervals(location.hourly ?? {}),
-    };
-  });
+      return {
+        routeId: route.id,
+        location: { lat: latitude, lon: longitude },
+        hourly: toIntervals(location.hourly ?? {}),
+      };
+    });
+  } finally {
+    releaseFetchTimeout(response);
+  }
 }
 
 export const fetchOpenMeteoForecast = getOpenMeteoForecast;

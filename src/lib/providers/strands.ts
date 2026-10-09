@@ -36,9 +36,10 @@ export function createExplanationAgent(): Agent {
 
 export async function explainRouteWithStrands(
   context: ExplanationInput,
+  signal?: AbortSignal,
 ): Promise<RouteExplanation> {
   const agent = createExplanationAgent();
-  const result = await agent.invoke(JSON.stringify(context));
+  const result = await agent.invoke(JSON.stringify(context), { signal } as never);
   const explanation =
     result.lastMessage?.content
       ?.map((block) => (block as unknown as { text?: string }).text)

@@ -52,22 +52,28 @@ export async function POST(request: Request) {
   try {
     parsedContext = explanationContextSchema.parse(await request.json());
     const context = parsedContext;
-    const result = await Promise.race([
-      explainRouteWithStrands(context),
-      new Promise<never>((_, reject) =>
-        setTimeout(() => reject(new Error("Explanation timed out.")), 15000),
-      ),
-    ]);
-    const explanation = result.explanation.trim();
+    const controller = new AbortController();
+    let timeout: ReturnType<typeof setTimeout> | undefined;
+    try {
+      const result = await Promise.race([
+        explainRouteWithStrands(context, controller.signal),
+        new Promise<never>((_, reject) => {
+          timeout = setTimeout(() => {
+            controller.abort();
+            reject(new Error("Explanation timed out."));
+          }, 15000);
+        }),
+      ]);
+      const explanation = result.explanation.trim();
 
-    if (!explanation) {
-      return NextResponse.json(
-        { error: "The explanation service returned no explanation." },
-        { status: 502 },
-      );
+      if (!explanation) {
+        return NextResponse.json({ explanation: deterministicFallback(context), state: "fallback" });
+      }
+
+      return NextResponse.json({ explanation });
+    } finally {
+      if (timeout) clearTimeout(timeout);
     }
-
-    return NextResponse.json({ explanation });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
